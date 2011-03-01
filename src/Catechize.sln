@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize", "Catechize\Catechize.csproj", "{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Services", "Catechize.Services\Catechize.Services.csproj", "{2FD2E695-5298-477A-A155-756EE357EFE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Model", "Catechize.Model\Catechize.Model.csproj", "{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Test", "Catechize.Test\Catechize.Test.csproj", "{1D969605-6C0F-49A5-AED9-1235933695E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD2E695-5298-477A-A155-756EE357EFE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD2E695-5298-477A-A155-756EE357EFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD2E695-5298-477A-A155-756EE357EFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD2E695-5298-477A-A155-756EE357EFE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D969605-6C0F-49A5-AED9-1235933695E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D969605-6C0F-49A5-AED9-1235933695E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D969605-6C0F-49A5-AED9-1235933695E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D969605-6C0F-49A5-AED9-1235933695E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
