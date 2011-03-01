@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Globalization;
 
-namespace Catechize.Models
+namespace Catechize.Model
 {
     public class Student
     {

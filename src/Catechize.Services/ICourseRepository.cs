@@ -6,29 +6,29 @@ using Catechize.Model;
 
 namespace Catechize.Services
 {
-    public interface IStudentRepository
+    public interface ICourseRepository
     {
-        void Create(Student newStudent);
-        void Save(Student student);
-        Student GetById(int studentID);
+        void Create(Course newCourse);
+        void Save(Course course);
+        Course GetById(int courseID);
     }
 }
 
 namespace Catechize.Services.SqlServer
 {
-    public class StudentRepository : IStudentRepository
+    public class CourseRepository : ICourseRepository
     {
-        public void Create(Student newStudent)
+        public void Create(Course newCourse)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(Student student)
+        public void Save(Course course)
         {
             throw new NotImplementedException();
         }
 
-        public Student GetById(int studentID)
+        public Course GetById(int courseID)
         {
             throw new NotImplementedException();
         }
