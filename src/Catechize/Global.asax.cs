@@ -25,6 +25,13 @@ namespace Catechize
 
             // Mapped Routes
             routes.MapRoute(
+                "Course",
+                "Course/{courseName}/Part{coursePart}/{coursePage}",
+                new { controller="Course", action="HandlePageRequest", 
+                      courseName = "Basic", coursePart = 1, coursePage = "index" }
+            );
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
