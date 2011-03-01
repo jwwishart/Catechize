@@ -14,6 +14,5 @@ namespace Catechize.Models
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public CultureInfo Culture { get; set; }
-
     }
 }
