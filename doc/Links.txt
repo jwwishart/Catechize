@@ -1,0 +1,8 @@
+Links.txt
+
+Contains links that I might find useful for this project later on.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+Fast JSON Serializer and Deserializer
+http://www.codeproject.com/KB/IP/fastJSON.aspx
