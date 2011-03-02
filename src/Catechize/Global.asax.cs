@@ -23,12 +23,20 @@ namespace Catechize
             routes.IgnoreRoute("elmah.axd");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // Mapped Routes
+            // Map Study page Route
             routes.MapRoute(
-                "Course",
-                "Course/{courseName}/Part{coursePart}/{coursePage}",
-                new { controller="Course", action="HandlePageRequest", 
+                "Study",
+                "Study/{courseName}/Part{coursePart}/{coursePage}",
+                new { controller="Study", action="HandlePageRequest", 
                       courseName = "Basic", coursePart = 1, coursePage = "index" }
+            );
+
+            // Map Courses details Route
+            routes.MapRoute(
+                "Courses",
+                "Courses/{courseName}",
+                new { controler="Courses", action="Index",
+                      courseName = UrlParameter.Optional }
             );
 
             routes.MapRoute(

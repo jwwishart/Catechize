@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Catechize.Controllers
 {
-    public class CourseController : Controller
+    public class StudyController : Controller
     {
         //
         // GET: /Course/
