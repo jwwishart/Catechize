@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Runtime.InteropServices;
+using Catechize.Services;
 
 namespace Catechize.Controllers
 {
@@ -11,7 +12,7 @@ namespace Catechize.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
+            ViewBag.Message = "Welcome";
 
             return View();
         }

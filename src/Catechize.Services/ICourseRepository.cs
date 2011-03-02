@@ -11,6 +11,7 @@ namespace Catechize.Services
         void Create(Course newCourse);
         void Save(Course course);
         Course GetById(int courseID);
+        IList<Course> GetAll();
     }
 }
 
@@ -29,6 +30,11 @@ namespace Catechize.Services.SqlServer
         }
 
         public Course GetById(int courseID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Course> GetAll()
         {
             throw new NotImplementedException();
         }

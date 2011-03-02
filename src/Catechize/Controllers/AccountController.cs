@@ -8,12 +8,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using Catechize.Models;
+using System.Text;
 
 namespace Catechize.Controllers
 {
     public class AccountController : Controller
     {
-
         public IFormsAuthenticationService FormsService { get; set; }
         public IMembershipService MembershipService { get; set; }
 
@@ -39,9 +39,16 @@ namespace Catechize.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ValidateUser(model.UserName, model.Password))
+                if (MembershipService.ValidateUser(model.Email, model.Password))
                 {
-                    FormsService.SignIn(model.UserName, model.RememberMe);
+                    var cryptoService = System.Security.Cryptography.SHA1CryptoServiceProvider.Create();
+
+                    // TODO: Change the username to an identifier instead of an email address.
+                    byte[] bytes = Encoding.UTF8.GetBytes(model.Email.ToCharArray());
+
+                    FormsService.SignIn(Encoding.UTF8.GetString(cryptoService.ComputeHash(bytes))
+                        , model.RememberMe);
+
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -88,11 +95,19 @@ namespace Catechize.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
+                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Email, model.Password);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
+                    var cryptoService = System.Security.Cryptography.SHA1CryptoServiceProvider.Create();
+
+                    // TODO: Change the username to an identifier instead of an email address.
+                    byte[] bytes = Encoding.UTF8.GetBytes(model.Email.ToCharArray());
+
+                    FormsService.SignIn(Encoding.UTF8.GetString(cryptoService.ComputeHash(bytes))
+                        , false);
+
+                    FormsService.SignIn(model.Email, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
                 else
