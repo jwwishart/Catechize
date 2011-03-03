@@ -42,11 +42,13 @@
   <ItemGroup>
     <Compile Include="IDataAccess.cs" />
     <Compile Include="IHtmlPageRepository.cs" />
-    <Compile Include="IMembershipService.cs" />
     <Compile Include="IPageRepository.cs" />
     <Compile Include="IPartRepository.cs" />
     <Compile Include="ICourseRepository.cs" />
+    <Compile Include="IRoleService.cs" />
     <Compile Include="IStudentRepository.cs" />
+    <Compile Include="IMembershipService.cs" />
+    <Compile Include="MembershipCreateStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

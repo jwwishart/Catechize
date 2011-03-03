@@ -11,6 +11,9 @@ namespace Catechize.Services
         void Create(Student newStudent);
         void Save(Student student);
         Student GetById(int studentID);
+
+        IList<Guid> GetCourses(int studentID);
+        IList<Guid> GetCourses(string studentUserName);
     }
 }
 
@@ -29,6 +32,17 @@ namespace Catechize.Services.SqlServer
         }
 
         public Student GetById(int studentID)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IList<Guid> GetCourses(int studentID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Guid> GetCourses(string studentUserName)
         {
             throw new NotImplementedException();
         }
