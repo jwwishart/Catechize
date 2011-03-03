@@ -47,7 +47,6 @@
     <Compile Include="IPartRepository.cs" />
     <Compile Include="ICourseRepository.cs" />
     <Compile Include="IStudentRepository.cs" />
-    <Compile Include="ITest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

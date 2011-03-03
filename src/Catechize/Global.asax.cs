@@ -31,12 +31,27 @@ namespace Catechize
                       courseName = "Basic", coursePart = 1, coursePage = "index" }
             );
 
+            routes.MapRoute(
+                "Student",
+                "Student/{username}/{section}",
+                new { controller="Student", action="Index",
+                      username= UrlParameter.Optional, section = UrlParameter.Optional }
+            );
+
             // Map Courses details Route
             routes.MapRoute(
                 "Courses",
-                "Courses/{courseName}",
-                new { controler="Courses", action="Index",
-                      courseName = UrlParameter.Optional }
+                "Courses/{courseName}/{page}",
+                new { controller="Courses", action="Index",
+                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+            );
+
+            // Admin Controller
+            routes.MapRoute(
+                "Admin",
+                "Admin/{adminArea}",
+                new { controller = "Admin", action = "Index",
+                    adminArea = UrlParameter.Optional }
             );
 
             routes.MapRoute(

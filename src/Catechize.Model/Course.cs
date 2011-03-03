@@ -7,8 +7,12 @@ namespace Catechize.Model
 {
     public class Course
     {
-        public int CourseID {get; set;}
+        public Guid CourseID {get; set;}
+        public string Identifier { get; set; } // TODO: Note: CourseNameUrl
         public string Title { get; set; }
-        public string Url { get; set; } // TODO: NOTE: Specifies string used for the {course} part of the Route (MVC SPECIFIC)
+        public string Description { get; set; }
+        public bool IsPublished { get; set; }
+        public bool IsEnabled { get; set; }
+        public IList<int> PrerequisiteCourses { get; set; }
     }
 }

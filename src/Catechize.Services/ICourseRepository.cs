@@ -10,7 +10,7 @@ namespace Catechize.Services
     {
         void Create(Course newCourse);
         void Save(Course course);
-        Course GetById(int courseID);
+        Course GetById(int courseID);        
         IList<Course> GetAll();
     }
 }
