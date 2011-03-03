@@ -32,16 +32,16 @@ namespace Catechize
             );
 
             routes.MapRoute(
-                "Student",
-                "Student/{username}/{section}",
-                new { controller="Student", action="Index",
+                "User",
+                "User/{username}/{section}",
+                new { controller="User", action="index",
                       username= UrlParameter.Optional, section = UrlParameter.Optional }
             );
 
             // Map Courses details Route
             routes.MapRoute(
                 "Courses",
-                "Courses/{courseName}/{page}",
+                "Courses/{courseName}/{action}",
                 new { controller="Courses", action="Index",
                       courseName = UrlParameter.Optional, page = UrlParameter.Optional }
             );

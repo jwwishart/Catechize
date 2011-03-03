@@ -20,6 +20,24 @@ namespace Catechize.Controllers
 
         public ActionResult Index(string courseName)
         {
+            // TODO: List all available courses if courseName is null
+            return View();
+        }
+
+        public ActionResult Register(string courseName)
+        {
+            return View();
+        }
+
+        [Authorize(Roles="master, administrator")] // TODO: Implement custom Authorize class
+        public ActionResult Enable()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "master, administrator")] // TODO: Implement custom Authorize class
+        public ActionResult Disable()
+        {
             return View();
         }
 
