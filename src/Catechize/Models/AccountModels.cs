@@ -10,18 +10,7 @@ using System.Web.Security;
 
 namespace Catechize.Models
 {
-
-
-    /*
-     * NOTES:
-     * Refresher course :o)
-     * http://msdn.microsoft.com/en-us/library/wce3kxhd.aspx
-     * http://stackoverflow.com/questions/1385042/asp-net-mvc-forms-authentication-authorize-attribute-simple-roles
-     * http://msdn.microsoft.com/en-us/library/system.web.security.formsauthentication.encrypt.aspx
-     * 
-     */
-
-
+    
     #region Models
 
     public class ChangePasswordModel

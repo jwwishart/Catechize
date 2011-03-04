@@ -6,3 +6,12 @@ Contains links that I might find useful for this project later on.
 
 Fast JSON Serializer and Deserializer
 http://www.codeproject.com/KB/IP/fastJSON.aspx
+
+
+Information on Forms Authentication Process
+http://msdn.microsoft.com/en-us/library/ff649266.aspx
+
+Other Tidbits on Forms Authentication
+http://msdn.microsoft.com/en-us/library/wce3kxhd.aspx
+http://stackoverflow.com/questions/1385042/asp-net-mvc-forms-authentication-authorize-attribute-simple-roles
+http://msdn.microsoft.com/en-us/library/system.web.security.formsauthentication.encrypt.aspx
