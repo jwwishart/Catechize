@@ -10,6 +10,7 @@ http://www.codeproject.com/KB/IP/fastJSON.aspx
 
 Information on Forms Authentication Process
 http://msdn.microsoft.com/en-us/library/ff649266.aspx
+http://www.asp.net/web-forms/security
 
 Other Tidbits on Forms Authentication
 http://msdn.microsoft.com/en-us/library/wce3kxhd.aspx
