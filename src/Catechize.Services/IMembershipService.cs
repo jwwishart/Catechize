@@ -14,52 +14,38 @@ namespace Catechize.Services
         bool ChangeEmail(string username, string oldEmail, string newEmail);
 
         bool IsUsernameAvailable(string username);
-
-        bool HasRole(string username, Role role);
-        bool HasRole(string username, string roleName);
+        bool IsUsernameWellFormed(string username);
     }
-}
 
-namespace Catechize.Services.SqlServer
-{
-    public class MembershipService : IMembershipService 
+    public abstract class MembershipServiceBase : IMembershipService
     {
-        public bool ValidateUser(string username, string password)
+        /// <summary>
+        /// Invalid and unsafe character list. $ to @ are Invalid characters. Everything else is unsafe.
+        /// </summary>
+        public const string InvalidCharacters = "$&+,/:;=?@'\"<>#%{}|\\^~[]`";
+
+        public abstract bool ValidateUser(string username, string password);
+        public abstract MembershipCreateStatus CreateUser(string username, string password, string email);
+        public abstract bool ChangePassword(string username, string oldPassword, string newPassword);
+        public abstract bool ChangeEmail(string username, string oldEmail, string newEmail);
+
+        public abstract bool IsUsernameAvailable(string username);
+
+        public bool IsUsernameWellFormed(string username)
         {
-            throw new NotImplementedException();
-        }
+            // Cant be null or empty
+            if (String.IsNullOrEmpty(username))
+                throw new ArgumentException("username cannot be null or empty", "username");
 
-        public MembershipCreateStatus CreateUser(string username, string password, string email)
-        {
-            throw new NotImplementedException();
-        }
+            // Can't have any whitespace characters
+            foreach (char c in username)
+            {
+                // Ensure only alpha numeric
+                if (char.IsLetterOrDigit(c) == false)
+                    return false;
+            }
 
-        public bool ChangePassword(string username, string oldPassword, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public bool HasRole(string username, Role role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasRole(string username, string roleName)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public bool ChangeEmail(string username, string oldEmail, string newEmail)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsUsernameAvailable(string username)
-        {
-            throw new NotImplementedException();
+            return true;
         }
     }
-
 }

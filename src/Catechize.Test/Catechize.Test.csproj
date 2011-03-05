@@ -38,9 +38,26 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\..\..\..\Program Files\xUnit\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\..\..\..\Program Files\xUnit\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMembershipService_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catechize.Model\Catechize.Model.csproj">
+      <Project>{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}</Project>
+      <Name>Catechize.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catechize.Services\Catechize.Services.csproj">
+      <Project>{2FD2E695-5298-477A-A155-756EE357EFE0}</Project>
+      <Name>Catechize.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
