@@ -15,6 +15,14 @@ namespace Catechize.Services
         IPartRepository PartRepo { get; }
 
         IHtmlPageRepository HtmlPageRepo { get; }
+
+        /*
+         * Put some of the major methods in this service
+         * GetUserByID(userID)
+         * IsUserInRole(userID, role)
+         * etc...
+         * 
+         */
     }
 
     public class DefaultCatechizeControllerService : ICatechizeControllerService

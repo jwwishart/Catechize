@@ -21,8 +21,12 @@ namespace Catechize.Test
 
         public override bool ValidateUser(string username, string password)
         {
-            if (IsUsernameWellFormed(username) == false)
-                return false;
+            CheckUsernameWellFormedness(username);
+
+            if (password == null)
+                throw new ArgumentNullException("password");
+            if (password == string.Empty)
+                throw new ArgumentException("password cannot be an empty string", "password");
 
             if (String.IsNullOrEmpty(password))
                 throw new ArgumentException("password", "password cannot be null");
@@ -44,7 +48,38 @@ namespace Catechize.Test
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            CheckUsernameWellFormedness(username);
+
+            if (oldPassword == null)
+                throw new ArgumentNullException("oldPassword");
+            if (oldPassword == string.Empty)
+                throw new ArgumentException("oldPassword cannot be an empty string", "oldPassword");
+            if (newPassword == null)
+                throw new ArgumentNullException("newPassword");
+            if (newPassword == string.Empty)
+                throw new ArgumentException("newPassword cannot be an empty string", "newPassword");
+
+            // Find username
+            foreach (string key in _credentials.Keys)
+            {
+                if (key.Equals(username, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (_credentials[key].Equals(oldPassword, StringComparison.Ordinal)) {
+                        _credentials[key] = newPassword;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static void CheckUsernameWellFormedness(string username)
+        {
+            if (username == null)
+                throw new ArgumentNullException("username");
+            if (username == string.Empty)
+                throw new ArgumentException("username cannot be empty string", "username");
         }
 
         public override bool ChangeEmail(string username, string oldEmail, string newEmail)
@@ -54,6 +89,16 @@ namespace Catechize.Test
 
         public override bool IsUsernameAvailable(string username)
         {
+            CheckUsernameWellFormedness(username);
+
+            // Need to throw an exception if there is a space in the 
+            // username.
+            foreach (char c in username)
+            {
+                if (Char.IsWhiteSpace(c))
+                    throw new ArgumentException("username cannot have any whitespace characters in it.", "username");
+            }
+
             if (IsUsernameWellFormed(username) == false)
                 return false;
 
@@ -87,7 +132,7 @@ namespace Catechize.Test
         public void ValidateUser_NullUsername_ExceptionThrown()
         {
             IMembershipService service = GetService();
-            Assert.Throws<ArgumentException>(() => service.ValidateUser(null, "password1"));
+            Assert.Throws<ArgumentNullException>(() => service.ValidateUser(null, "password1"));
         }
 
         [Fact]
@@ -101,7 +146,7 @@ namespace Catechize.Test
         public void ValidateUser_NullPassword_ExceptionThrown()
         {
             IMembershipService service = GetService();
-            Assert.Throws<ArgumentException>(() => service.ValidateUser("username1", null));
+            Assert.Throws<ArgumentNullException>(() => service.ValidateUser("username1", null));
         }
 
         [Fact]
@@ -128,7 +173,78 @@ namespace Catechize.Test
 
 
 
+        [Fact]
+        public void ChangePassword_ChangePasswordWithValidCredentials_ReturnsTrue()
+        {
+            IMembershipService service = GetService();
+            Assert.True(service.ChangePassword("person1", "password1", "newPassword1"));
+        }
 
+        [Fact]
+        public void ChangePassword_ChangePasswordWithValidCredentials_PasswordChanged()
+        {
+            IMembershipService service = GetService();
+            service.ChangePassword("person1", "password1", "newPassword1");
+            Assert.True(service.ValidateUser("person1", "newPassword1"));
+        }
+
+        [Fact]
+        public void ChangePassword_ChangePasswordInvalidUsername_ReturnsFalse()
+        {
+            IMembershipService service = GetService();
+            Assert.False(service.ChangePassword("RANDOM", "password1", "newPassword1"));
+        }
+
+        [Fact]
+        public void ChangePassword_ChangePasswordWithInvalidPassword_ReturnsFalse()
+        {
+            IMembershipService service = GetService();
+            Assert.False(service.ChangePassword("person1", "RANDOMPASSWORD", "newPassword1"));
+        }
+
+        [Fact]
+        public void ChangePassword_NullUsername_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentNullException>( () => service.ChangePassword(null, "password1", "newpassword"));
+        }
+
+        [Fact]
+        public void ChangePassword_EmtpyUsername_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentException>(() => service.ChangePassword(string.Empty, "password1", "newpassword"));
+        }
+
+        [Fact]
+        public void ChangePassword_OldPasswordIsNull_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentNullException>(() => service.ChangePassword("username1", null, "newpassword"));
+        }
+
+        [Fact]
+        public void ChangePassword_OldPasswordIEmpty_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentException>(() => service.ChangePassword("username1", string.Empty, "newpassword"));
+        }
+
+        [Fact]
+        public void ChangePassword_NewPasswordIsNull_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentNullException>(() => service.ChangePassword("person1", "oldpassword", null));
+        }
+
+        [Fact]
+        public void ChangePassword_NewPasswordIEmpty_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            Assert.Throws<ArgumentException>(() => service.ChangePassword("person1", "oldpassword", string.Empty));
+        }
+
+    
 
         [Fact]
         public void IsUsernameAvailable_EmptyString_ThrowsException()
@@ -141,7 +257,7 @@ namespace Catechize.Test
         public void IsUsernameAvailable_NullString_ThrowsException()
         {
             IMembershipService service = GetService();
-            Assert.Throws<ArgumentException>(() => service.IsUsernameAvailable(null));
+            Assert.Throws<ArgumentNullException>(() => service.IsUsernameAvailable(null));
         }
 
         [Fact]
