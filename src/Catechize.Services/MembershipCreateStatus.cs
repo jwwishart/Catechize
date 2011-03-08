@@ -11,6 +11,6 @@ namespace Catechize.Services
         InvalidUserName = 1,
         InvalidPassword = 2,
         InvalidEmail = 5,
-        DuplicateUserName = 6,
+        UsernameTaken = 6,
     }
 }

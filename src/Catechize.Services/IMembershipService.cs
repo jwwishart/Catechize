@@ -8,7 +8,15 @@ namespace Catechize.Services
 {
     public interface IMembershipService
     {
-        // TODO: Should I have a MinimumPasswordLength property? 
+        // Properties
+        //
+
+        int MinPasswordLength { get; }
+        bool EmailRequired { get; }
+
+        // Methods
+        //
+
         bool ValidateUser(string username, string password);
 
         MembershipCreateStatus CreateUser(string username, string password, string email);
@@ -17,25 +25,19 @@ namespace Catechize.Services
 
         bool IsUsernameAvailable(string username);
         bool IsUsernameWellFormed(string username);
-
-        /*
-         * int MinimumPasswordLength {get; }
-         * 
-         * CreateUser()
-         * ChangePassword()
-         * ChangeEmail()
-         * 
-         */
     }
 
     public abstract class MembershipServiceBase : IMembershipService
     {
+        // Properties
+        //
 
-        /// <summary>
-        /// Invalid and unsafe character list. $ to @ are Invalid characters. Everything else is unsafe.
-        /// </summary>
-        public const string InvalidCharacters = "$&+,/:;=?@'\"<>#%{}|\\^~[]`";
+        public abstract int MinPasswordLength { get; }
+        public abstract bool EmailRequired { get; }
 
+
+        // Methods
+        //
         public abstract bool ValidateUser(string username, string password);
         public abstract MembershipCreateStatus CreateUser(string username, string password, string email);
         public abstract bool ChangePassword(string username, string oldPassword, string newPassword);
@@ -59,5 +61,6 @@ namespace Catechize.Services
 
             return true;
         }
+
     }
 }
