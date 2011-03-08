@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace Catechize.Test
 {
-
     class MemberService_Fake : MembershipServiceBase
     {
         private int _minPasswordLength = 6;
@@ -51,6 +50,36 @@ namespace Catechize.Test
             return false;
         }
 
+        private bool ValidateEmailAddress(string emailAddress)
+        {
+            if (emailAddress == null)
+                throw new ArgumentNullException("emailAddress");
+            if (emailAddress == string.Empty)
+                throw new ArgumentException("emailAddress is required", "emailAddress");
+
+            // Check lengths
+            if (emailAddress.Length < 3)
+                return false; ;
+            if (emailAddress.Length > 254)
+                return false;
+
+            // Regex test.
+            if (Regex.IsMatch(emailAddress, "^.+?@.+$") == false)
+                return false;
+
+            // Check for @ Symbol
+            var foundAt = false;
+            foreach (char c in emailAddress) {
+                if (c.Equals('@'))
+                    foundAt = true;
+            }
+
+            if (false == foundAt)
+                return false;
+
+            return true;
+        }
+
         public override MembershipCreateStatus CreateUser(string username, string password, string email)
         {
             CheckUsernameWellFormedness(username);
@@ -64,28 +93,10 @@ namespace Catechize.Test
 
             if (EmailRequired)
             {
-                if (email == null)
-                    throw new ArgumentNullException("email");
-                if (email == string.Empty)
-                    throw new ArgumentException("email is required", "email");
-
-                if (email.Length < 3)
-                    return MembershipCreateStatus.InvalidEmail;
-                if (email.Length > 254)
-                    return MembershipCreateStatus.InvalidEmail;
-
-                if (Regex.IsMatch(email, "^.+?@.+$") == false)
-                    return MembershipCreateStatus.InvalidEmail;
-
-                var foundAt = false;
-                foreach (char c in email)
+                if (false == ValidateEmailAddress(email))
                 {
-                    if (c.Equals('@'))
-                        foundAt = true;
-                }
-
-                if (foundAt == false)
                     return MembershipCreateStatus.InvalidEmail;
+                }
             }
 
             foreach (var di in _credentials)
@@ -158,7 +169,20 @@ namespace Catechize.Test
 
         public override bool ChangeEmail(string username, string oldEmail, string newEmail)
         {
-            throw new NotImplementedException();
+            CheckUsernameWellFormedness(username);
+            
+            if (false == IsUsernameWellFormed(username))
+                return false;
+
+            if (EmailRequired)
+            {
+                if (false == ValidateEmailAddress(oldEmail))
+                    return false;
+                if (false == ValidateEmailAddress(newEmail))
+                    return false;
+            }
+
+            return true;
         }
 
         public override bool IsUsernameAvailable(string username)
@@ -654,6 +678,159 @@ namespace Catechize.Test
             Assert.Throws<ArgumentException>(
                 () => service.ChangePassword(existingUsername, validPassword, string.Empty));
         }
+
+        // TEST:ChangeEmail
+
+        [Fact]
+        public void ChangeEmail_NullUsername_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            string validOldEmail = "example@example.com";
+            string validNewEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentNullException>(
+                () => service.ChangeEmail(null, validOldEmail, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_EmptyUsername_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            string validOldEmail = "example@example.com";
+            string validNewEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentException>(
+                () => service.ChangeEmail(string.Empty, validOldEmail, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_ValidParameters_ReturnsTrue()
+        {
+            IMembershipService service = GetService();
+            string validUsername = "person1";
+            string validOldEmail = "example@example.com";
+            string validNewEmail = "example2@example.com";
+
+            Assert.True(service.ChangeEmail(validUsername, validOldEmail, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_InvalidUsername_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            string validUsername = "$asd@#";
+            string validOldEmail = "example@example.com";
+            string validNewEmail = "example2@example.com";
+
+            Assert.False(service.ChangeEmail(validUsername, validOldEmail, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_NullOldEmailEmailRequired_ThrowsException()
+        {
+            IMembershipService service = GetService(6, true);
+            string validUsername = "username1";
+            string validNewEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentNullException>( 
+                () => service.ChangeEmail(validUsername, null, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_EmptyOldEmailEmailRequired_ThrowsException()
+        {
+            IMembershipService service = GetService(6, true);
+            string validUsername = "username1";
+            string validNewEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentException>(
+                () => service.ChangeEmail(validUsername, string.Empty, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_NullNewEmailEmailRequired_ThrowsException()
+        {
+            IMembershipService service = GetService(6, true);
+            string validUsername = "username1";
+            string validOldEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentNullException>(
+                () => service.ChangeEmail(validUsername, validOldEmail, null));
+        }
+
+        [Fact]
+        public void ChangeEmail_EmptyNewEmailEmailRequired_ThrowsException()
+        {
+            IMembershipService service = GetService(6, true);
+            string validUsername = "username1";
+            string validOldEmail = "example2@example.com";
+
+            Assert.Throws<ArgumentException>(
+                () => service.ChangeEmail(validUsername, validOldEmail, string.Empty));
+        }
+
+        [Fact]
+        public void ChangeEmail_NullOldEmailNoneRequired_ReturnsTrue()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string validNewEmail = "example2@example.com";
+
+            Assert.True(service.ChangeEmail(validUsername, null, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_EmptyOldEmailNoneRequired_ReturnsTrue()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string validNewEmail = "example2@example.com";
+
+            Assert.True(service.ChangeEmail(validUsername, string.Empty, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_NullNewEmailNoneRequired_ReturnsTrue()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string validOldEmail = "example2@example.com";
+
+            Assert.True(service.ChangeEmail(validUsername, validOldEmail, null));
+        }
+
+        [Fact]
+        public void ChangeEmail_EmptyNewEmailNoneRequired_ReturnsTrue()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string validOldEmail = "example2@example.com";
+
+            Assert.True(service.ChangeEmail(validUsername, validOldEmail, string.Empty));
+        }
+
+        [Fact]
+        public void ChangeEmail_ReplaceEmptyEmailWithEmptyEmailWithEmailsNotRequired_ReturnsTrue()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            
+            Assert.True(service.ChangeEmail(validUsername, string.Empty, string.Empty));
+        }
+
+        [Fact]
+        public void ChangeEmail_OldEmailAddressInvalid_ReturnFalse()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string invalidOldEmail = " aksjdfkl jalfjkdk jaf; ";
+            //string validNewEmail = ""; asdjkf kja; // PUT VALID EMAIL ADDRESS
+
+            Assert.True(service.ChangeEmail(validUsername, string.Empty, string.Empty));
+        }
+
+
+
 
 
         // TEST:IsUsernameAvailable

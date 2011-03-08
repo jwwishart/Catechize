@@ -21,6 +21,7 @@ namespace Catechize.Services
 
         MembershipCreateStatus CreateUser(string username, string password, string email);
         bool ChangePassword(string username, string oldPassword, string newPassword);
+        string ResetPassword(string username);
         bool ChangeEmail(string username, string oldEmail, string newEmail);
 
         bool IsUsernameAvailable(string username);
@@ -62,5 +63,9 @@ namespace Catechize.Services
             return true;
         }
 
+        public string ResetPassword(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
