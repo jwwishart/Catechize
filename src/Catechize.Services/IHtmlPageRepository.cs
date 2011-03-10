@@ -13,7 +13,8 @@ namespace Catechize.Services
     {
         void Create(string pageKey, CultureInfo language, string content);
         string GetPage(string pageKey, CultureInfo language);
-        void Save(string pageKey, CultureInfo language, string newContent);
+        void Update(string pageKey, CultureInfo language, string newContent);
+        void Delete(string pageKey, CultureInfo language);
     }
 }
 

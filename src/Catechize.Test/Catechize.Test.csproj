@@ -49,7 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMembershipService_Tests.cs" />
+    <Compile Include="Model\Course_Tests.cs" />
+    <Compile Include="Services\IMembershipService_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,7 @@ namespace Catechize
             routes.IgnoreRoute("elmah.axd");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // Map Study page Route
+            // Map Routes
             routes.MapRoute(
                 "Study",
                 "Study/{courseName}/Part{coursePart}/{coursePage}",
@@ -33,20 +33,22 @@ namespace Catechize
 
             routes.MapRoute(
                 "User",
-                "User/{username}/{section}",
-                new { controller="User", action="index",
-                      username= UrlParameter.Optional, section = UrlParameter.Optional }
+                "User/{username}/{action}",
+                new { controller="User", action="index" }
             );
 
-            // Map Courses details Route
+            routes.MapRoute(
+                "Course_Register",
+                "Courses/{courseName}/Register",
+                new { controller="Courses", action="Register"});
+
             routes.MapRoute(
                 "Courses",
-                "Courses/{courseName}/{action}",
+                "Courses/{courseName}/{page}",
                 new { controller="Courses", action="Index",
                       courseName = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
-            // Admin Controller
             routes.MapRoute(
                 "Admin",
                 "Admin/{adminArea}",
@@ -55,10 +57,32 @@ namespace Catechize
             );
 
             routes.MapRoute(
+                "Design",
+                "Design/{courseName}/{page}",
+                new { controller="Design", action="Index",
+                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                "Translate",
+                "Translate/{courseName}/{page}",
+                new { controller="Translate", action="Index",
+                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                "Grading",
+                "Grading/{courseName}/{page}",
+                new { controller="Grading", action="Index",
+                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+
 
         }
 

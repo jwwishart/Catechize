@@ -18,10 +18,14 @@ namespace Catechize.Controllers
             this.services = services;
         }
 
+        public ActionResult Index()
+        {
+            return View("ListAllCourses");
+        }
+
         public ActionResult Index(string courseName)
         {
-            // TODO: List all available courses if courseName is null
-            return View();
+            return View("ShowCourseDetails");
         }
 
         public ActionResult Register(string courseName)
@@ -29,13 +33,13 @@ namespace Catechize.Controllers
             return View();
         }
 
-        [Authorize(Roles="master, administrator")] // TODO: Implement custom Authorize class
+        [Authorize(Roles="master, administrator")] 
         public ActionResult Enable()
         {
             return View();
         }
 
-        [Authorize(Roles = "master, administrator")] // TODO: Implement custom Authorize class
+        [Authorize(Roles = "master, administrator")] 
         public ActionResult Disable()
         {
             return View();

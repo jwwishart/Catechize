@@ -8,7 +8,7 @@ namespace Catechize.Services
     public interface IRepository
     {
         object GetByID(int ID);
-        void Save(object value);
+        void Create(object value);
         void Update(object value);
         void Delete(object value);
         void Delete(int ID);
@@ -18,7 +18,7 @@ namespace Catechize.Services
     public interface IRepository<T> where T: class
     {
         T GetByID(int ID);
-        void Save(T value);
+        void Create(T value);
         void Update(T value);
         void Delete(T value);
         void Delete(int ID);

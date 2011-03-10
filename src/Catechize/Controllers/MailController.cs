@@ -7,6 +7,7 @@ using ActionMailer.Net;
 
 namespace Catechize.Controllers
 {
+    // TODO: Secure this controller
     public class MailController : MailerBase
     {
     }
