@@ -17,23 +17,3 @@ namespace Catechize.Services
     }
 }
 
-namespace Catechize.Services.SqlServer
-{
-    public class HtmlPageRepository : IHtmlPageRepository
-    {
-        public void Create(string pageKey, CultureInfo language, string content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetPage(string pageKey, CultureInfo language)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(string pageKey, CultureInfo language, string newContent)
-        {
-            throw new NotImplementedException();
-        }
-    }
-}

@@ -10,22 +10,19 @@ namespace Catechize.Test
 {
     class MemberService_Fake : MembershipServiceBase
     {
-        private int _minPasswordLength = 6;
-        private bool _emailRequired = true;
-
-        public MemberService_Fake(int minPasswordLength, bool emailRequired) : this()
+        public MemberService_Fake(int minPasswordLength, bool emailRequired)
+            : base(minPasswordLength, emailRequired)
         {
-            this._minPasswordLength = minPasswordLength;
-            this._emailRequired = emailRequired;
+            _credentials.Add(new Tuple<string, string, string>("person1", "password1", "email1"));
+            _credentials.Add(new Tuple<string, string, string>("person2", "password2", "email2"));
+            _credentials.Add(new Tuple<string, string, string>("person3", "PassWord3", "email3"));
+            _credentials.Add(new Tuple<string, string, string>("person4", "PassWord4", "example@example.com"));
         }
 
-        private IList<Tuple<string, string, string>> _credentials = new List<Tuple<string,string,string>>();
+        private IList<Tuple<string, string, string>> _credentials = new List<Tuple<string, string, string>>();
 
-        public MemberService_Fake()
+        public MemberService_Fake() :this(4, true)
         {
-            _credentials.Add(new Tuple<string,string,string>("person1", "password1", "email1"));
-            _credentials.Add(new Tuple<string,string,string>("person2", "password2", "email2"));
-            _credentials.Add(new Tuple<string,string,string>("person3", "PassWord3", "email3"));
         }
 
         public override bool ValidateUser(string username, string password)
@@ -69,7 +66,8 @@ namespace Catechize.Test
 
             // Check for @ Symbol
             var foundAt = false;
-            foreach (char c in emailAddress) {
+            foreach (char c in emailAddress)
+            {
                 if (c.Equals('@'))
                     foundAt = true;
             }
@@ -105,7 +103,7 @@ namespace Catechize.Test
                     return MembershipCreateStatus.UsernameTaken;
             }
 
-            this._credentials.Add(new Tuple<string,string,string>(username, password, email));
+            this._credentials.Add(new Tuple<string, string, string>(username, password, email));
             return MembershipCreateStatus.Success;
         }
 
@@ -138,7 +136,7 @@ namespace Catechize.Test
                     if (item.Item2.Equals(oldPassword, StringComparison.Ordinal))
                     {
                         Tuple<string, string, string> newCredentials;
-                        newCredentials = new Tuple<string,string,string>(username, newPassword, item.Item3);
+                        newCredentials = new Tuple<string, string, string>(username, newPassword, item.Item3);
 
                         _credentials.Remove(item);
                         _credentials.Add(newCredentials);
@@ -147,6 +145,41 @@ namespace Catechize.Test
                 }
             }
 
+            return false;
+        }
+
+        public override bool ResetPassword(string username, out string newPassword)
+        {
+            if (null == username)
+                throw new ArgumentNullException("username");
+            if (string.Empty == username)
+                throw new ArgumentException("username cannot be an empty string", "username");
+
+            if (false == IsUsernameWellFormed(username))
+            {
+                newPassword = string.Empty;
+                return false;
+            }
+            if (IsUsernameAvailable(username))
+            {
+                newPassword = string.Empty;
+                return false;
+            }
+            foreach (Tuple<string, string, string> item in _credentials)
+            {
+                if (item.Item1.Equals(username, StringComparison.OrdinalIgnoreCase))
+                {
+                    newPassword = GenerateTemporaryPassword();
+
+                    Tuple<string, string, string> newCredentials;
+                    newCredentials = new Tuple<string, string, string>(username, newPassword, item.Item3);
+
+                    _credentials.Remove(item);
+                    _credentials.Add(newCredentials);
+                    return true;
+                }
+            }
+            newPassword = string.Empty;
             return false;
         }
 
@@ -170,7 +203,7 @@ namespace Catechize.Test
         public override bool ChangeEmail(string username, string oldEmail, string newEmail)
         {
             CheckUsernameWellFormedness(username);
-            
+
             if (false == IsUsernameWellFormed(username))
                 return false;
 
@@ -180,6 +213,19 @@ namespace Catechize.Test
                     return false;
                 if (false == ValidateEmailAddress(newEmail))
                     return false;
+            }
+            else
+            {
+                if (false == String.IsNullOrEmpty(oldEmail))
+                {
+                    if (false == ValidateEmailAddress(oldEmail))
+                        return false;
+                }
+                if (false == String.IsNullOrEmpty(newEmail))
+                {
+                    if (false == ValidateEmailAddress(newEmail))
+                        return false;
+                }
             }
 
             return true;
@@ -208,23 +254,13 @@ namespace Catechize.Test
 
             return true;
         }
-
-        public override int MinPasswordLength
-        {
-            get { return _minPasswordLength; }
-        }
-
-        public override bool EmailRequired
-        {
-            get { return _emailRequired; }
-        }
     }
 
     public class MembershipServiceBase_Tests
     {
         private const string VALID_EMAIL_ADDRESS = "example@example.com";
         private const string AVAILABLE_USERNAME = "newUsername";
-       
+
         public static IMembershipService GetService()
         {
             return new MemberService_Fake();
@@ -308,7 +344,7 @@ namespace Catechize.Test
             string validUsername = "newUsername";
             string validPassword = "newPassword";
 
-            Assert.Equal( MembershipCreateStatus.Success,
+            Assert.Equal(MembershipCreateStatus.Success,
                 service.CreateUser(validUsername, validPassword, VALID_EMAIL_ADDRESS));
         }
 
@@ -321,7 +357,7 @@ namespace Catechize.Test
 
             service.CreateUser(validUsername, validPassword, VALID_EMAIL_ADDRESS);
 
-            Assert.True(service.ValidateUser(validUsername, validPassword));    
+            Assert.True(service.ValidateUser(validUsername, validPassword));
         }
 
         [Fact]
@@ -372,7 +408,7 @@ namespace Catechize.Test
             string usernameWithInvalidChars = "!@#$%^&&**";
             string validPassword = "newPassword";
 
-            Assert.Equal( MembershipCreateStatus.InvalidUserName,
+            Assert.Equal(MembershipCreateStatus.InvalidUserName,
                 service.CreateUser(usernameWithInvalidChars, validPassword, VALID_EMAIL_ADDRESS));
         }
 
@@ -388,12 +424,12 @@ namespace Catechize.Test
         }
 
         [Fact]
-        public void CreateUser_PasswordToShort_Returns_InvalidPassword()
+        public void CreateUser_PasswordToShort_ReturnsInvalidPassword()
         {
-            int minimimPasswordLength = 3;
+            int minimimPasswordLength = 4;
             IMembershipService service = GetService(minimimPasswordLength, true);
             string validUsername = "newUsername";
-            string passwordThatIsTooShort = "22";
+            string passwordThatIsTooShort = "223";
 
             Assert.Equal(MembershipCreateStatus.InvalidPassword,
                 service.CreateUser(validUsername, passwordThatIsTooShort, VALID_EMAIL_ADDRESS));
@@ -402,10 +438,10 @@ namespace Catechize.Test
         [Fact]
         public void CreateUser_PasswordEqualToMinLength_Returns_Success()
         {
-            int minimimPasswordLength = 3;
+            int minimimPasswordLength = 4;
             IMembershipService service = GetService(minimimPasswordLength, true);
             string validUsername = "newUsername";
-            string validLengthPassword = "223";
+            string validLengthPassword = "1234";
 
             Assert.Equal(MembershipCreateStatus.Success,
                 service.CreateUser(validUsername, validLengthPassword, VALID_EMAIL_ADDRESS));
@@ -414,10 +450,10 @@ namespace Catechize.Test
         [Fact]
         public void CreateUser_PasswordLongerThanMin_Returns_Success()
         {
-            int minimimPasswordLength = 3;
+            int minimimPasswordLength = 4;
             IMembershipService service = GetService(minimimPasswordLength, true);
             string validUsername = "newUsername";
-            string passwordLongerThanMinLength = "2233";
+            string passwordLongerThanMinLength = "12345";
 
             Assert.Equal(MembershipCreateStatus.Success,
                 service.CreateUser(validUsername, passwordLongerThanMinLength, VALID_EMAIL_ADDRESS));
@@ -430,8 +466,8 @@ namespace Catechize.Test
             string validUsername = "newUsername";
             string validPassword = "newPassword";
 
-            Assert.Throws<ArgumentNullException> (
-                () => service.CreateUser(validUsername, validPassword , null));
+            Assert.Throws<ArgumentNullException>(
+                () => service.CreateUser(validUsername, validPassword, null));
         }
 
         [Fact]
@@ -477,7 +513,7 @@ namespace Catechize.Test
             string validPassword = "newPassword";
             string validEmail = "1@2";
 
-            Assert.Equal( MembershipCreateStatus.Success, 
+            Assert.Equal(MembershipCreateStatus.Success,
                 service.CreateUser(validUsername, validPassword, validEmail));
         }
 
@@ -500,7 +536,7 @@ namespace Catechize.Test
             string validUsername = "newUsername";
             string validPassword = "newPassword";
 
-            Assert.Equal( MembershipCreateStatus.Success,
+            Assert.Equal(MembershipCreateStatus.Success,
                 service.CreateUser(validUsername, validPassword, null));
         }
 
@@ -557,7 +593,7 @@ namespace Catechize.Test
         [Fact]
         public void CreateUser_UsernameAlreadyTaken_ReturnsUsernameTaken()
         {
-            IMembershipService service = GetService( 3, false );
+            IMembershipService service = GetService(4, false);
             var takenUsername = "person1";
             var validPassword = "password1";
 
@@ -576,7 +612,7 @@ namespace Catechize.Test
             string validPassword = "password1";
             string validNewPassword = "newPassword1";
 
-            Assert.True(service.ChangePassword(validUsername, validPassword , validNewPassword ));
+            Assert.True(service.ChangePassword(validUsername, validPassword, validNewPassword));
         }
 
         [Fact]
@@ -620,7 +656,7 @@ namespace Catechize.Test
             string validPassword = "password1";
             string validNewPassword = "newPassword";
 
-            Assert.Throws<ArgumentNullException>( 
+            Assert.Throws<ArgumentNullException>(
                 () => service.ChangePassword(null, validPassword, validNewPassword));
         }
 
@@ -663,7 +699,7 @@ namespace Catechize.Test
             IMembershipService service = GetService();
             string existingUsername = "person1";
             string validPassword = "oldPassword";
-           
+
             Assert.Throws<ArgumentNullException>(
                 () => service.ChangePassword(existingUsername, validPassword, null));
         }
@@ -732,7 +768,7 @@ namespace Catechize.Test
             string validUsername = "username1";
             string validNewEmail = "example2@example.com";
 
-            Assert.Throws<ArgumentNullException>( 
+            Assert.Throws<ArgumentNullException>(
                 () => service.ChangeEmail(validUsername, null, validNewEmail));
         }
 
@@ -814,7 +850,7 @@ namespace Catechize.Test
         {
             IMembershipService service = GetService(6, false);
             string validUsername = "username1";
-            
+
             Assert.True(service.ChangeEmail(validUsername, string.Empty, string.Empty));
         }
 
@@ -824,12 +860,133 @@ namespace Catechize.Test
             IMembershipService service = GetService(6, false);
             string validUsername = "username1";
             string invalidOldEmail = " aksjdfkl jalfjkdk jaf; ";
-            //string validNewEmail = ""; asdjkf kja; // PUT VALID EMAIL ADDRESS
+            string validNewEmail = "valid@email.com";
 
-            Assert.True(service.ChangeEmail(validUsername, string.Empty, string.Empty));
+            Assert.False(service.ChangeEmail(validUsername, invalidOldEmail, validNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_NewEmailAddressInvalid_ReturnFalse()
+        {
+            IMembershipService service = GetService(6, false);
+            string validUsername = "username1";
+            string validOldEmail = "valid@email.com";
+            string invalidNewEmail = " aksjdfkl jalfjkdk jaf; ";
+
+            Assert.False(service.ChangeEmail(validUsername, validOldEmail, invalidNewEmail));
+        }
+
+        [Fact]
+        public void ChangeEmail_ValidCredentialsPassed_EmailWasChanged()
+        {
+            IMembershipService service = GetService(6, false);
+            string existingUsername = "person4";
+            string existingUsersEmailAddress = "example@example.com";
+            string newEmail = "anotherexample@example.com";
+
+            service.ChangeEmail(existingUsername, existingUsersEmailAddress, newEmail);
+
         }
 
 
+        // TEST: ResetPassword
+
+        [Fact]
+        public void ResetPassword_NullUsernamePassed_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            string newPassword;
+
+            Assert.Throws<ArgumentNullException>(
+                () => service.ResetPassword(null, out newPassword));
+        }
+
+        [Fact]
+        public void ResetPassword_EmptyString_ThrowsException()
+        {
+            IMembershipService service = GetService();
+            string newPassword;
+
+            Assert.Throws<ArgumentException>(
+                () => service.ResetPassword(string.Empty, out newPassword));
+        }
+
+        [Fact]
+        public void ResetPassword_InvalidUsernameGiven_ReturnsFalse()
+        {
+            IMembershipService service = GetService();
+            string invalidUsernameGiven = "!@#$!@#$^#$%^&$%^&*";
+            string newPassword;
+
+            Assert.False(service.ResetPassword(
+                invalidUsernameGiven, out newPassword));
+        }
+
+        [Fact]
+        public void ResetPassword_ExistingUsernameGiven_ReturnsTrue()
+        {
+            IMembershipService service = GetService();
+            string existingUsername = "person4";
+            string newPassword;
+
+            Assert.True(service.ResetPassword(
+                existingUsername, out newPassword));
+        }
+
+        [Fact]
+        public void ResetPassword_ExistingUsernameGiven_NonNullNonEmptyPasswordReturnedFromOutParameter()
+        {
+            IMembershipService service = GetService();
+            string existingUsername = "person4";
+            string newPassword;
+
+            service.ResetPassword(existingUsername, out newPassword);
+
+            Assert.False(String.IsNullOrEmpty(newPassword));
+        }
+
+        [Fact]
+        public void ResetPassword_ExistingUsernameGiven_NewPasswordWorks()
+        {
+            IMembershipService service = GetService();
+
+            string existingUsername = "person4";
+            string newPassword;
+
+            service.ResetPassword(existingUsername, out newPassword);
+
+            Assert.True(service.ValidateUser(existingUsername, newPassword));
+        }
+
+
+        //TEST:EmailRequired
+        [Fact]
+        public void EmailRequired_PassInTrueInConstructor_ReturnsTrue()
+        {
+            IMembershipService service = GetService(4, true);
+
+            Assert.True(service.EmailRequired);
+        }
+
+        [Fact]
+        public void EmailRequired_PassInFalseInConstructor_ReturnsTrue()
+        {
+            IMembershipService service = GetService(4, false);
+
+            Assert.False(service.EmailRequired);
+        }
+
+
+        //TEST:MinPasswordLength
+
+        [Fact]
+        public void Constructor_MinimumPasswordLengthLessThanMinimumAllowed_ThrowException()
+        {
+            int oneLessThanMinimumPasswordLength = 3;
+
+            Assert.Throws<ArgumentException>( 
+                () => GetService(oneLessThanMinimumPasswordLength, false));
+        }
 
 
 
@@ -839,7 +996,7 @@ namespace Catechize.Test
         public void IsUsernameAvailable_EmptyString_ThrowsException()
         {
             IMembershipService service = GetService();
-            Assert.Throws<ArgumentException>( () => service.IsUsernameAvailable(String.Empty));
+            Assert.Throws<ArgumentException>(() => service.IsUsernameAvailable(String.Empty));
         }
 
         [Fact]
@@ -882,7 +1039,7 @@ namespace Catechize.Test
             IMembershipService service = GetService();
             string usernameWithSpaces = "User    Name";
 
-            Assert.Throws<ArgumentException>( 
+            Assert.Throws<ArgumentException>(
                 () => service.IsUsernameAvailable(usernameWithSpaces));
         }
 

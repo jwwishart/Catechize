@@ -6,9 +6,7 @@ using Catechize.Model;
 
 namespace Catechize.Services
 {
-    public interface IRoleService
+    public interface ICourseRepository : IRepository<Course>
     {
-        IList<Role> GetAll();
-        Role GetRole(string roleName);
     }
 }

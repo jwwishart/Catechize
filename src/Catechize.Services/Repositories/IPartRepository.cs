@@ -6,9 +6,8 @@ using Catechize.Model;
 
 namespace Catechize.Services
 {
-    public interface IRoleService
+    public interface IPartRepository : IRepository<Part>
     {
-        IList<Role> GetAll();
-        Role GetRole(string roleName);
+        IList<Page> GetPagesByID(int partID);
     }
 }
