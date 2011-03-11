@@ -70,6 +70,24 @@ namespace Catechize.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Course.
+        /// </summary>
+        internal static string EditCourse {
+            get {
+                return ResourceManager.GetString("EditCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Course.
+        /// </summary>
+        internal static string NewCourse {
+            get {
+                return ResourceManager.GetString("NewCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Course.
         /// </summary>
         internal static string ViewCourse {

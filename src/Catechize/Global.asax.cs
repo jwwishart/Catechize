@@ -44,9 +44,9 @@ namespace Catechize
 
             routes.MapRoute(
                 "Courses",
-                "Courses/{courseName}/{page}",
+                "Courses/{courseName}/{action}",
                 new { controller="Courses", action="Index",
-                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+                      courseName = UrlParameter.Optional,}
             );
 
             routes.MapRoute(

@@ -120,6 +120,12 @@
   <data name="Courses" xml:space="preserve">
     <value>Courses</value>
   </data>
+  <data name="EditCourse" xml:space="preserve">
+    <value>Edit Course</value>
+  </data>
+  <data name="NewCourse" xml:space="preserve">
+    <value>New Course</value>
+  </data>
   <data name="ViewCourse" xml:space="preserve">
     <value>View Course</value>
   </data>

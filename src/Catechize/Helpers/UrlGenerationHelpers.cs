@@ -5,21 +5,36 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Catechize.Resources;
+using Catechize.Controllers;
+using System.Web.Routing;
 
 namespace Catechize.Helpers
 {
-    public static class UrlGenerationHelpers
+    public static class UrlGenerationHelperExtensionMethods
     {
-        // Goto the page listing all courses
-        public static MvcHtmlString CoursesUrl(this HtmlHelper helper)
+        private const string CoursesRouteName = "Courses";
+        private const string CoursesControllerName = "Courses";
+
+        public static string CoursesPath(this UrlGenerationHelper helper)
         {
-            return helper.RouteLink(LinkResources.Courses, "Courses");
+            return string.Empty;
         }
 
-        // Goto a specific course 
-        public static MvcHtmlString CourseViewUrl(this HtmlHelper helper, string courseKey)
+        public static string NewCoursePath(this UrlGenerationHelper helper, string courseKey)
         {
-            return helper.RouteLink(LinkResources.ViewCourse, "Courses", new { courseName = courseKey });
+            return string.Empty;
+        }
+
+        public static string EditCoursePath(this UrlGenerationHelper helper, string courseKey)
+        {
+            return string.Empty;
+        }
+
+        public static string CoursePath(this UrlGenerationHelper helper, string courseKey)
+        {
+            return string.Empty;
         }
     }
+
+    
 }
