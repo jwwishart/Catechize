@@ -8,5 +8,10 @@ namespace Catechize.Controllers
 {
     public class TestController : Controller
     {
+
+        public ActionResult LinkToTest()
+        {
+            return View();
+        }
     }
 }

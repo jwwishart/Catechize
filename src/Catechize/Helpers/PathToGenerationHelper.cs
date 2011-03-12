@@ -1,14 +1,14 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-public class UrlGenerationHelper
+public class PathToGenerationHelper
 {
-    public UrlGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer)
+    public PathToGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer)
         : this(viewContext, viewDataContainer, RouteTable.Routes)
     {
     }
 
-    public UrlGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer
+    public PathToGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer
         , RouteCollection routeCollection)
     {
         this.ViewContext = viewContext;
@@ -35,14 +35,14 @@ public class UrlGenerationHelper
     }
 }
 
-public class UrlGenerationHelper<T>
+public class PathToGenerationHelper<T>
 {
-    public UrlGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer)
+    public PathToGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer)
         : this(viewContext, viewDataContainer, RouteTable.Routes)
     {
     }
 
-    public UrlGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer
+    public PathToGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer
         , RouteCollection routeCollection)
     {
         this.ViewContext = viewContext;
