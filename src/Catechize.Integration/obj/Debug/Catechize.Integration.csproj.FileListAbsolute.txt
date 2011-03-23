@@ -1,0 +1,5 @@
+C:\_Development\Catechize\src\Catechize.Integration\bin\Debug\Catechize.Integration.dll
+C:\_Development\Catechize\src\Catechize.Integration\bin\Debug\Catechize.Integration.pdb
+C:\_Development\Catechize\src\Catechize.Integration\obj\Debug\ResolveAssemblyReference.cache
+C:\_Development\Catechize\src\Catechize.Integration\obj\Debug\Catechize.Integration.dll
+C:\_Development\Catechize\src\Catechize.Integration\obj\Debug\Catechize.Integration.pdb

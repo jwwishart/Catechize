@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "GravatarTest";
+}
+
+<h2>GravatarTest</h2>
+
+@Html.Raw(Html.Gravatar("justin.william.wishart@gmail.com"))
+
+@Html.Raw(Html.Gravatar("justin.william.wishart@gmail.com", 10))
+@Html.Raw(Html.Gravatar("JUSTIN.WILLIAM.WISHART@GMAIL.COM", 20))
+@Html.Raw(Html.Gravatar("justin.william.wishart@gmail.com  ", 30))
+@Html.Raw(Html.Gravatar("  justin.william.wishart@gmail.com", 40))
+@Html.Raw(Html.Gravatar("  justin.william.wishart@gmail.com  ", 50))
+
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, "http://www.twitterbuttons.com/upload/images/19ca38bec0nt1.png"))
+
+<br />Following 1 Item should show missing image placehold. Rest should show standards<br />
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.FileNotFound))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.Identicon))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.MonsterID))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.MysteryMan))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.Retro))
+@Html.Raw(Html.Gravatar("  example@example.com  ", 50, GravatarDefault.Wavatar))

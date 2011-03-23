@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1D969605-6C0F-49A5-AED9-1235933695E7}</ProjectGuid>
+    <ProjectGuid>{1F4DB464-75A9-4612-BDF4-EF322BBB8B51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Catechize.Test</RootNamespace>
-    <AssemblyName>Catechize.Test</AssemblyName>
+    <RootNamespace>Catechize.Integration</RootNamespace>
+    <AssemblyName>Catechize.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActionMailer.Net">
-      <HintPath>..\packages\ActionMailer.0.4.6\lib\Net40\ActionMailer.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,31 +38,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\..\..\..\Program Files\xUnit\xunit.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.extensions">
-      <HintPath>..\..\..\..\Program Files\xUnit\xunit.extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Course_Tests.cs" />
-    <Compile Include="Services\IMembershipService_Tests.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IRepository_Tests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Catechize.Model\Catechize.Model.csproj">
-      <Project>{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}</Project>
-      <Name>Catechize.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Catechize.Services\Catechize.Services.csproj">
-      <Project>{2FD2E695-5298-477A-A155-756EE357EFE0}</Project>
-      <Name>Catechize.Services</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

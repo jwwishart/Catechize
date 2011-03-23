@@ -9,7 +9,10 @@ namespace Catechize.Model
     public class Course
     {
         public int CourseID { get; set; }
+
+        // Max Length: 50 characters
         public string Identifier { get; set; } // TODO: Note: CourseNameUrl
+        // Max Length: 
         public string Title { get; set; }
         public string Description { get; set; }
 

@@ -12,40 +12,50 @@ namespace Catechize.Helpers
 {
     public static class LinkToGenerationHelperExtensionMethods
     {
-        private const string CoursesRouteName = "Courses";
         private const string CoursesControllerName = "Courses";
 
-        private static string GenerateLink(LinkToGenerationHelper helper, string linkText, string routeName, string action, string controller)
-        {
-            return HtmlHelper.GenerateLink(
-                  helper.ViewContext.RequestContext
-                , helper.RouteCollection
-                , linkText
-                , routeName
-                , action
-                , controller
-                , new RouteValueDictionary()
-                , new RouteValueDictionary());
+        // Helpers Methods
+        //
+        private static MvcHtmlString GenerateAnchor(LinkToGenerationHelper helper, string url, string text) {
+            TagBuilder builder = new TagBuilder("a");
+            builder.Attributes.Add("href", url);
+            builder.InnerHtml = text;
+            return MvcHtmlString.Create(builder.ToString());
         }
 
-        public static string CoursesPath(this LinkToGenerationHelper helper)
+
+        // Helpers (Extension Methods)
+        //
+        public static MvcHtmlString CoursesLink(this LinkToGenerationHelper helper)
         {
-            return GenerateLink(helper, LinkResources.Courses, CoursesRouteName, string.Empty, CoursesControllerName);
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("Index", CoursesControllerName);
+
+            return GenerateAnchor(helper, url, LinkResources.Courses);
         }
 
-        public static string NewCoursePath(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString NewCourseLink(this LinkToGenerationHelper helper)
         {
-            return string.Empty;
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("New", CoursesControllerName);
+
+            return GenerateAnchor(helper, url, LinkResources.NewCourse);
         }
 
-        public static string EditCoursePath(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString EditCourseLink(this LinkToGenerationHelper helper, string courseKey)
         {
-            return string.Empty;
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("Edit", CoursesControllerName, new { courseKey = courseKey });
+
+            return GenerateAnchor(helper, url, LinkResources.EditCourse);
         }
 
-        public static string CoursePath(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString CourseLink(this LinkToGenerationHelper helper, string courseKey)
         {
-            return string.Empty;
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("View", CoursesControllerName, new { courseKey = courseKey });
+
+            return GenerateAnchor(helper, url, LinkResources.ViewCourse);
         }
     }
 

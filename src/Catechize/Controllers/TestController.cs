@@ -13,5 +13,10 @@ namespace Catechize.Controllers
         {
             return View();
         }
+
+        public ActionResult GravatarTest()
+        {
+            return View();
+        }
     }
 }

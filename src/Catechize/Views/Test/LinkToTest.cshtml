@@ -1,7 +1,11 @@
 ﻿@{
     ViewBag.Title = "LinkToTest";
 }
-
 <h2>LinkToTest</h2>
 
-@LinkTo.Courses()
+@LinkTo.CoursesLink()
+@LinkTo.CourseLink("testcourse")
+@LinkTo.NewCourseLink()
+@LinkTo.EditCourseLink("anothertestcourse")
+
+

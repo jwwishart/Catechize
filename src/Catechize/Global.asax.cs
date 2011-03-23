@@ -26,9 +26,9 @@ namespace Catechize
             // Map Routes
             routes.MapRoute(
                 "Study",
-                "Study/{courseName}/Part{coursePart}/{coursePage}",
+                "Study/{courseKey}/Part{coursePart}/{coursePage}",
                 new { controller="Study", action="HandlePageRequest", 
-                      courseName = "Basic", coursePart = 1, coursePage = "index" }
+                      courseKey = "Basic", coursePart = 1, coursePage = "index" }
             );
 
             routes.MapRoute(
@@ -38,15 +38,9 @@ namespace Catechize
             );
 
             routes.MapRoute(
-                "Course_Register",
-                "Courses/{courseName}/Register",
-                new { controller="Courses", action="Register"});
-
-            routes.MapRoute(
                 "Courses",
-                "Courses/{courseName}/{action}",
-                new { controller="Courses", action="Index",
-                      courseName = UrlParameter.Optional,}
+                "Courses/{action}/{courseKey}",
+                new { controller="Courses", action="Index" }
             );
 
             routes.MapRoute(
@@ -58,23 +52,23 @@ namespace Catechize
 
             routes.MapRoute(
                 "Design",
-                "Design/{courseName}/{page}",
+                "Design/{courseKey}/{page}",
                 new { controller="Design", action="Index",
-                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 "Translate",
-                "Translate/{courseName}/{page}",
+                "Translate/{courseKey}/{page}",
                 new { controller="Translate", action="Index",
-                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 "Grading",
-                "Grading/{courseName}/{page}",
+                "Grading/{courseKey}/{page}",
                 new { controller="Grading", action="Index",
-                      courseName = UrlParameter.Optional, page = UrlParameter.Optional }
+                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
             routes.MapRoute(
