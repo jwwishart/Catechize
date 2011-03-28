@@ -9,6 +9,13 @@ namespace Catechize.Model
     {
         public int PartID {get; set;}
         public int CourseID { get; set; }
+        public int OrdinalNo { get; set; }
+    }
+
+    public class PartLanguage
+    {
+        public int CourseID { get; set; }
+        public int OrdinalNo { get; set; }
         public string Title { get; set; }
     }
 }

@@ -4,16 +4,8 @@ using System.Linq;
 using System.Text;
 
 namespace Catechize.Model
-{
-    public class Role
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
-
-
-    // TODO: Think about how best to implement this?
-    class RoleNames
+{ 
+    public class RoleName
     {
         public static string Master = "master";
         public static string Administrator = "admin";

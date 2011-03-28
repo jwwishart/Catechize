@@ -45,7 +45,6 @@
     <Compile Include="Repositories\IPageRepository.cs" />
     <Compile Include="Repositories\IPartRepository.cs" />
     <Compile Include="Repositories\ICourseRepository.cs" />
-    <Compile Include="IRoleService.cs" />
     <Compile Include="Repositories\IStudentRepository.cs" />
     <Compile Include="IMembershipService.cs" />
     <Compile Include="MembershipCreateStatus.cs" />
