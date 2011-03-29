@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Catechize.Model
 {
-    public class Course
+    public class Course : Translatable<CourseLanguage>
     {
         public int CourseID { get; set; }
 
@@ -21,25 +21,9 @@ namespace Catechize.Model
         public bool IsEnabled { get; set; }
 
         public IList<int> PrerequisiteCourses { get; set; }
-        public IList<CourseLanguage> LanguageVersions { get; set; }
-
-        public CourseLanguage GetLanguage(CultureInfo cultureInfo)
-        {
-            foreach (var cLang in LanguageVersions)
-            {
-                if (cLang.Culture.Equals(cultureInfo))
-                    return cLang;
-            }
-
-            return null;
-        }
-
-        public CourseLanguage GetLanguage(string cultureName) {
-            return GetLanguage(new CultureInfo(cultureName));
-        }
     }
 
-    public class CourseLanguage
+    public class CourseLanguage : IHasCulture
     {
         public string Title { get; set; }
         public string Description { get; set; }

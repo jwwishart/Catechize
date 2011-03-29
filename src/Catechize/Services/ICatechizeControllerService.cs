@@ -8,7 +8,6 @@ namespace Catechize.Services
     public interface ICatechizeControllerService
     {
         IMembershipService MembershipService { get; }
-        IRoleService RoleService { get; }
         ICourseRepository CourseRepo { get; }
         IStudentRepository StudentRepo { get; }
         IPageRepository PageRepo { get; }
@@ -28,7 +27,6 @@ namespace Catechize.Services
     public class DefaultCatechizeControllerService : ICatechizeControllerService
     {
         private IMembershipService membershipService;
-        private IRoleService roleService;
         private ICourseRepository courseRepo;
         private IStudentRepository studentRepo;
         private IPageRepository pageRepo;
@@ -37,7 +35,6 @@ namespace Catechize.Services
 
         public DefaultCatechizeControllerService(
             IMembershipService membershipService,
-            IRoleService roleService,
             ICourseRepository courseRepo,
             IStudentRepository studentRepo,
             IPageRepository pageRepo,
@@ -45,7 +42,6 @@ namespace Catechize.Services
             IHtmlPageRepository htmlPageRepo)
         {
             this.membershipService = membershipService;
-            this.roleService = roleService;
             this.courseRepo = courseRepo;
             this.studentRepo = studentRepo;
             this.pageRepo = pageRepo;
@@ -56,12 +52,7 @@ namespace Catechize.Services
         public IMembershipService MembershipService
         { 
             get { return this.membershipService; } 
-        }
-
-        public IRoleService RoleService
-        {
-            get { return this.roleService; }
-        }
+        }       
 
         public ICourseRepository CourseRepo
         {

@@ -45,6 +45,7 @@
     <Compile Include="App_Code\Massive.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="Element.cs" />
+    <Compile Include="IHasCulture.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="RoleName.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentType.cs" />
+    <Compile Include="Translatable.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

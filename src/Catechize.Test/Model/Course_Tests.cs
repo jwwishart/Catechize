@@ -18,7 +18,7 @@ namespace Catechize.Test.Model
 
             var newCourse = new Course()
             {
-                LanguageVersions = new List<CourseLanguage>() {
+                Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
                          Culture = new CultureInfo(validCultureID)
                     }
@@ -35,7 +35,7 @@ namespace Catechize.Test.Model
 
             var newCourse = new Course()
             {
-                LanguageVersions = new List<CourseLanguage>() {
+                Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
                          Culture = new CultureInfo(validCultureID)
                     }
@@ -53,7 +53,7 @@ namespace Catechize.Test.Model
 
             var newCourse = new Course()
             {
-                LanguageVersions = new List<CourseLanguage>() {
+                Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
                          Culture = new CultureInfo(validCultureID)
                     }
@@ -70,7 +70,7 @@ namespace Catechize.Test.Model
 
             var newCourse = new Course()
             {
-                LanguageVersions = new List<CourseLanguage>() {
+                Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
                          Culture = new CultureInfo(validCultureID)
                     }

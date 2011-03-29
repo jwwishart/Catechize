@@ -107,6 +107,8 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Customization\CatechizeWebViewPage.cs" />
+    <Compile Include="Customization\CustomIdentity.cs" />
+    <Compile Include="Customization\CustomPrincipal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
