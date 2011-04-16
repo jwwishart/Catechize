@@ -28,6 +28,42 @@ namespace Catechize.Services
         bool IsUsernameWellFormed(string username);
     }
 
+    public class MembershipService : MembershipServiceBase
+    {
+        public MembershipService() : base(4, true)
+        {
+        }
+
+        public override bool ValidateUser(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override MembershipCreateStatus CreateUser(string username, string password, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ChangeEmail(string username, string oldEmail, string newEmail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsUsernameAvailable(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ResetPassword(string username, out string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public abstract class MembershipServiceBase : IMembershipService
     {

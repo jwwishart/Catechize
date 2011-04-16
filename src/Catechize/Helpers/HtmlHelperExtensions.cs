@@ -9,7 +9,7 @@ namespace Catechize.Helpers
 {
     public static class HtmlHelperExtensions
     {
-        public static string IncludeScript(this HtmlHelper helper, string scriptFilename)
+        public static MvcHtmlString Script(this HtmlHelper helper, string scriptFilename)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
 
@@ -21,7 +21,25 @@ namespace Catechize.Helpers
                 builder.Attributes.Add("src", urlHelper.Content("~/Scripts/" + scriptFilename + ".js"));
             }
 
-            return builder.ToString() ;
+            return MvcHtmlString.Create( builder.ToString() );
         }
+
+        public static MvcHtmlString Stylesheet(this HtmlHelper helper, string cssFilename)
+        {
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+
+            TagBuilder builder = new TagBuilder("link");
+
+            if (Path.GetExtension(cssFilename) == ".css")
+                builder.Attributes.Add("href", urlHelper.Content("~/Content/" + cssFilename));
+            else
+                builder.Attributes.Add("href", urlHelper.Content("~/Content/" + cssFilename + ".css"));
+
+            builder.Attributes.Add("rel", "stylesheet");
+            builder.Attributes.Add("type", "text/css");
+            
+            return MvcHtmlString.Create(builder.ToString());
+        }
+
     }
 }

@@ -26,7 +26,7 @@ namespace Catechize.Helpers
 
         // Helpers (Extension Methods)
         //
-        public static MvcHtmlString CoursesLink(this LinkToGenerationHelper helper)
+        public static MvcHtmlString ListCourses(this LinkToGenerationHelper helper)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
             var url = urlHelper.Action("Index", CoursesControllerName);
@@ -34,26 +34,26 @@ namespace Catechize.Helpers
             return GenerateAnchor(helper, url, LinkResources.Courses);
         }
 
-        public static MvcHtmlString NewCourseLink(this LinkToGenerationHelper helper)
+        public static MvcHtmlString NewCourse(this LinkToGenerationHelper helper)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("New", CoursesControllerName);
+            var url = urlHelper.Action("NewCourse", CoursesControllerName);
 
             return GenerateAnchor(helper, url, LinkResources.NewCourse);
         }
 
-        public static MvcHtmlString EditCourseLink(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString EditCourse(this LinkToGenerationHelper helper, string courseKey)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("Edit", CoursesControllerName, new { courseKey = courseKey });
+            var url = urlHelper.Action("EditCourse", CoursesControllerName, new { courseKey = courseKey });
 
             return GenerateAnchor(helper, url, LinkResources.EditCourse);
         }
 
-        public static MvcHtmlString CourseLink(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString ViewCourse(this LinkToGenerationHelper helper, string courseKey)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("View", CoursesControllerName, new { courseKey = courseKey });
+            var url = urlHelper.Action("ViewCourse", CoursesControllerName, new { courseKey = courseKey });
 
             return GenerateAnchor(helper, url, LinkResources.ViewCourse);
         }

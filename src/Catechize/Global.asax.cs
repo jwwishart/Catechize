@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Data.Entity;
+using Catechize.Services;
+using Catechize.Customization;
 
 namespace Catechize
 {
@@ -86,6 +89,9 @@ namespace Catechize
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            // TODO: Remove before publishing
+            Database.SetInitializer<CatDbContext>(new CourseInitializer());
         }
     }
 }

@@ -9,7 +9,8 @@ namespace Catechize {
     public static class AppStart_NinjectMVC3 {
         public static void RegisterServices(IKernel kernel) {
             kernel.Bind<ICatechizeControllerService>().To<DefaultCatechizeControllerService>();
-            //kernel.Bind<IThingRepository>().To<SqlThingRepository>();
+
+            kernel.Bind<IMembershipService>().To<MembershipService>();
         }
 
         public static void Start() {

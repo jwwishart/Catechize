@@ -7,19 +7,18 @@ using Catechize.Helpers;
 
 namespace Catechize.Customization
 {
-    public abstract class CatechizeWebViewPage : WebViewPage
+
+    // Kudos: http://haacked.com/archive/2011/02/21/changing-base-type-of-a-razor-view.aspx
+    // But it didn't quite work correctly.
+    public abstract class CatechizeWebViewPage<TModel> : WebViewPage<TModel>
     {
-        public LinkToGenerationHelper LinkTo { get; set; }
+        public LinkToGenerationHelper<TModel> LinkTo { get; set; }
 
         public override void InitHelpers()
         {
             base.InitHelpers();
 
-            this.LinkTo = new LinkToGenerationHelper<object>(base.ViewContext, this);
+            this.LinkTo = new LinkToGenerationHelper<TModel>(base.ViewContext, this);
         }
-    }
-
-    public abstract class CatechizeWebViewPage<T> : CatechizeWebViewPage
-    {
     }
 }

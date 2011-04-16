@@ -37,7 +37,7 @@ namespace Catechize.Helpers
         }
     }
 
-    public class LinkToGenerationHelper<T> : LinkToGenerationHelper
+    public class LinkToGenerationHelper<TModel> : LinkToGenerationHelper
     {
         public LinkToGenerationHelper(ViewContext viewContext, IViewDataContainer viewDataContainer)
             : this(viewContext, viewDataContainer, RouteTable.Routes)
@@ -48,24 +48,10 @@ namespace Catechize.Helpers
             , RouteCollection routeCollection)
             : base(viewContext, viewDataContainer, routeCollection)
         {
-            this.ViewContext = viewContext;
-            this.ViewData = new ViewDataDictionary<T>(viewDataContainer.ViewData);
-            this.RouteCollection = routeCollection;
+            this.ViewData = new ViewDataDictionary<TModel>(viewDataContainer.ViewData);
         }
 
-        public new ViewDataDictionary<T> ViewData
-        {
-            get;
-            private set;
-        }
-
-        public new ViewContext ViewContext
-        {
-            get;
-            private set;
-        }
-
-        public new RouteCollection RouteCollection
+        public new ViewDataDictionary<TModel> ViewData
         {
             get;
             private set;
