@@ -6,6 +6,7 @@ using System.Data.Entity;
 using Catechize.Model;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Globalization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Catechize.Services
 {
@@ -17,7 +18,11 @@ namespace Catechize.Services
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<CultureInfo>().Property(p => p.Name);
+
+            modelBuilder.ComplexType<Course>();
+
+            modelBuilder.Entity<CultureInfo>().Property(p => p.Name)
+                .HasColumnName("CultureName");
                 
         }
 
