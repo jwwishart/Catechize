@@ -7,6 +7,8 @@ using System.Web.Routing;
 using System.Data.Entity;
 using Catechize.Services;
 using Catechize.Customization;
+using System.Web.Security;
+using Elmah;
 
 namespace Catechize
 {
@@ -42,7 +44,7 @@ namespace Catechize
 
             routes.MapRoute(
                 "Courses",
-                "Courses/{action}/{courseKey}",
+                "Courses/{action}/{courseName}",
                 new { controller="Courses", action="Index" }
             );
 
@@ -81,6 +83,34 @@ namespace Catechize
             );
 
 
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie == null || authCookie.Value == "")
+                return;
+
+            FormsAuthenticationTicket authTicket;
+            try
+            {
+                authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(
+                    new ArgumentException("authentication cookie could not be decripted", ex));
+                return;
+            }
+
+            if (Context.User != null)
+            {
+                //var principal = new CustomPrincipal(
+                //    new CustomIdentity(;
+                //principal.Identity = 
+                //Context.User.
+            }
         }
 
         protected void Application_Start()

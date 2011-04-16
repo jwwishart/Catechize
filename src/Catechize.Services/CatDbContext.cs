@@ -19,10 +19,8 @@ namespace Catechize.Services
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.ComplexType<Course>();
-
-            modelBuilder.Entity<CultureInfo>().Property(p => p.Name)
-                .HasColumnName("CultureName");
+            //modelBuilder.Entity<CultureInfo>().Property(p => p.Name)
+            //    .HasColumnName("CultureName");
                 
         }
 

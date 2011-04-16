@@ -14,9 +14,9 @@ namespace Catechize.Customization
         {
             var courses = new List<Course>
             {
-                new Course { CourseID = 1, Title = "Basic Course",      Description = "This is a basic course",     Identifier = "basic",       IsEnabled = true },
-                new Course { CourseID = 2, Title = "Advanced Course",   Description = "This is an advanced course", Identifier = "advanced",    IsEnabled = true },
-                new Course { CourseID = 3, Title = "New Course",        Description = "This is a new course",       Identifier = "newone",      IsEnabled = false}                
+                new Course { Title = "Basic Course",      Description = "This is a basic course",     Identifier = "basic",       IsEnabled = true },
+                new Course { Title = "Advanced Course",   Description = "This is an advanced course", Identifier = "advanced",    IsEnabled = true },
+                new Course { Title = "New Course",        Description = "This is a new course",       Identifier = "newone",      IsEnabled = false}                
             };
 
             courses.ForEach(c => context.Courses.Add(c));

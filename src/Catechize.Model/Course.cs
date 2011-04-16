@@ -10,11 +10,10 @@ namespace Catechize.Model
 {
     public class Course : Translatable<CourseLanguage>
     {
-        public int CourseID { get; set; }
-
         [Required(ErrorMessageResourceName="FieldRequired", 
                   ErrorMessageResourceType=typeof(Catechize.Model.Resources.Validation)) ]
         [StringLength(50)]
+        [Key]
         public string Identifier { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired",
@@ -44,7 +43,8 @@ namespace Catechize.Model
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public CultureInfo Culture { get; set; }
+        //public CultureInfo Culture { get; set; }
+        public string Culture { get; set; }
         public bool IsPublished { get; set; }
         public bool IsEnabled { get; set; }
     }

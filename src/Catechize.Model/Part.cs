@@ -18,6 +18,7 @@ namespace Catechize.Model
         public int CourseID { get; set; }
         public int OrdinalNo { get; set; }
         public string Title { get; set; }
-        public CultureInfo Culture { get; set; }
+        //public CultureInfo Culture { get; set; }
+        public string Culture { get; set; }
     }
 }

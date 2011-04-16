@@ -4,6 +4,7 @@ namespace Catechize.Model
 {
     public interface IHasCulture
     {
-        CultureInfo Culture { get; set; }
+        //CultureInfo Culture { get; set; }
+        string Culture { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model Catechize.Model.Course
+
+@{
+    ViewBag.Title = "ViewCourse";
+}
+
+<h2>ViewCourse</h2>
+
+<p>@LinkTo.ListCourses()</p>
+
+<fieldset>
+    <legend>Course</legend>
+
+    <div class="display-label">@Html.LabelFor(m=>m.Title)</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title) | 
+        @LinkTo.EditCourse(Model, "Edit")
+    </div>
+
+    <div class="display-label">@Html.LabelFor(m=>m.Description)</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">@Html.LabelFor(m=>m.IsEnabled)</div>
+    <div class="display-field">
+        @(Model.IsEnabled ? "Yes" : "No")
+    </div>
+</fieldset>

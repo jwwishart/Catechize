@@ -7,6 +7,8 @@ using System.Web.Mvc.Html;
 using Catechize.Resources;
 using Catechize.Controllers;
 using System.Web.Routing;
+using Catechize.Model;
+using System.Globalization;
 
 namespace Catechize.Helpers
 {
@@ -42,20 +44,48 @@ namespace Catechize.Helpers
             return GenerateAnchor(helper, url, LinkResources.NewCourse);
         }
 
-        public static MvcHtmlString EditCourse(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString EditCourse(this LinkToGenerationHelper helper, Course course)
         {
-            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("EditCourse", CoursesControllerName, new { courseKey = courseKey });
+            // Determine localized name
+            string linkText = LinkResources.ViewCourse;
+            CourseLanguage lang = course.GetLanguage(CultureInfo.CurrentUICulture);
 
-            return GenerateAnchor(helper, url, LinkResources.EditCourse);
+            if (lang != null)
+                linkText = lang.Title;
+            else
+                linkText = course.Title;
+
+            return EditCourse(helper, course, linkText);
         }
 
-        public static MvcHtmlString ViewCourse(this LinkToGenerationHelper helper, string courseKey)
+        public static MvcHtmlString EditCourse(this LinkToGenerationHelper helper, Course course, string label)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("ViewCourse", CoursesControllerName, new { courseKey = courseKey });
+            var url = urlHelper.Action("EditCourse", CoursesControllerName, new { courseName = course.Identifier });
 
-            return GenerateAnchor(helper, url, LinkResources.ViewCourse);
+            return GenerateAnchor(helper, url, label);
+        }
+
+        public static MvcHtmlString ViewCourse(this LinkToGenerationHelper helper, Course course)
+        {
+            // Determine localized name
+            string linkText = LinkResources.ViewCourse;
+            CourseLanguage lang = course.GetLanguage(CultureInfo.CurrentUICulture);
+
+            if (lang != null)
+                linkText = lang.Title;
+            else
+                linkText = course.Title;
+
+            return ViewCourse(helper, course, linkText);
+        }
+
+        public static MvcHtmlString ViewCourse(this LinkToGenerationHelper helper, Course course, string label)
+        {
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("ViewCourse", CoursesControllerName, new { courseName = course.Identifier });
+
+            return GenerateAnchor(helper, url, label);
         }
     }
 

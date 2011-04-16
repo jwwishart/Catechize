@@ -28,33 +28,47 @@ namespace Catechize.Controllers
         //
 
         [HttpGet]
+        [Authorize(Roles="Master, Administrator, Manager")]
         public ActionResult NewCourse()
         {
             return View(new Course() { IsEnabled = true });
         }
 
         [HttpPost]
+        [Authorize(Roles = "Master, Administrator, Manager")]
         public ActionResult NewCourse(Course course)
         {
             if (TryUpdateModel(course))
             {
                 _db.Courses.Add(course);
-                _db.Courses.Create();
+                _db.SaveChanges();
+
+                return RedirectToAction("ViewCourse", new { courseName = course.Identifier });
             }
 
             return View(course);
         }
 
         [HttpGet]
-        public ActionResult EditCourse()
+        public ActionResult EditCourse(string courseName)
         {
-            return View();
+            Course course = _db.Courses.Where(c => c.Identifier.Equals(courseName, StringComparison.OrdinalIgnoreCase))
+                .SingleOrDefault();
+
+            return View(course);
         }
 
         [HttpPost]
         public ActionResult EditCourse(Course course)
         {
-            throw new NotImplementedException();
+            if (TryUpdateModel(course))
+            {
+                _db.Entry(course).State = System.Data.EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("ViewCourse", new { courseName = course.Identifier });
+            }
+
+            return View(course);
         }
 
         public ActionResult Index()
@@ -64,7 +78,10 @@ namespace Catechize.Controllers
 
         public ActionResult ViewCourse(string courseName)
         {
-            return View("ShowCourseDetails");
+            Course course = _db.Courses.Where(c => c.Identifier.Equals(courseName, StringComparison.OrdinalIgnoreCase))
+                .SingleOrDefault();
+
+            return View(course);
         }
 
         public ActionResult Register(string courseName)

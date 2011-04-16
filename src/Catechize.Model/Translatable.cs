@@ -9,6 +9,9 @@ namespace Catechize.Model
 
         public T GetLanguage(CultureInfo cultureInfo)
         {
+            if (Translations == null)
+                return null;
+
             foreach (var cLang in this.Translations)
             {
                 if (cLang.Culture.Equals(cultureInfo))

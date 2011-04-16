@@ -11,7 +11,7 @@ namespace Catechize.Customization
         private CustomIdentity _identity = null;
         private string[] _roles = null;
 
-        CustomPrincipal(CustomIdentity identity, string[] roles)
+        public CustomPrincipal(CustomIdentity identity, string[] roles)
         {
             this._identity = identity;
             this._roles = roles;

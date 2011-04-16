@@ -20,7 +20,8 @@ namespace Catechize.Test.Model
             {
                 Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
-                         Culture = new CultureInfo(validCultureID)
+                         //Culture = new CultureInfo(validCultureID)
+                         Culture = validCultureID
                     }
                 }
             };
@@ -37,7 +38,8 @@ namespace Catechize.Test.Model
             {
                 Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
-                         Culture = new CultureInfo(validCultureID)
+                         //Culture = new CultureInfo(validCultureID)
+                         Culture = validCultureID
                     }
                 }
             };
@@ -55,7 +57,8 @@ namespace Catechize.Test.Model
             {
                 Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
-                         Culture = new CultureInfo(validCultureID)
+                         //Culture = new CultureInfo(validCultureID)
+                         Culture = validCultureID
                     }
                 }
             };
@@ -72,7 +75,8 @@ namespace Catechize.Test.Model
             {
                 Translations = new List<CourseLanguage>() {
                     new CourseLanguage() {
-                         Culture = new CultureInfo(validCultureID)
+                         //Culture = new CultureInfo(validCultureID)
+                         Culture = validCultureID
                     }
                 }
             };

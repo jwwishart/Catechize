@@ -6,7 +6,7 @@ using System.Security.Principal;
 
 namespace Catechize.Customization
 {
-    class CustomIdentity : IIdentity
+    public class CustomIdentity : IIdentity
     {
         private string _username;
 
