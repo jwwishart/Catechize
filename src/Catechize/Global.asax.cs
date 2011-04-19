@@ -9,6 +9,8 @@ using Catechize.Services;
 using Catechize.Customization;
 using System.Web.Security;
 using Elmah;
+using System.Security.Principal;
+using Ninject;
 
 namespace Catechize
 {
@@ -81,8 +83,6 @@ namespace Catechize
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
-
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
@@ -106,10 +106,14 @@ namespace Catechize
 
             if (Context.User != null)
             {
-                //var principal = new CustomPrincipal(
-                //    new CustomIdentity(;
-                //principal.Identity = 
-                //Context.User.
+                var membershipService = DependencyResolver.Current
+                    .GetService<IMembershipService>();
+
+                var principal = new GenericPrincipal( 
+                    new GenericIdentity(authTicket.Name, "CatechizeCustom"),
+                    authTicket.UserData.Split(',') /* User Roles */);
+
+                Context.User = principal;
             }
         }
 

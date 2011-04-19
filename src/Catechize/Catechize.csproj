@@ -111,11 +111,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Customization\AjaxOnlyAttribute.cs" />
     <Compile Include="Customization\CatechizeWebViewPage.cs" />
-    <Compile Include="Customization\CourseSeeding.cs" />
+    <Compile Include="Customization\CourseInitializer.cs" />
     <Compile Include="Customization\CustomIdentity.cs" />
     <Compile Include="Customization\CustomPrincipal.cs" />
-    <Compile Include="Customization\DropCreateDatabaseIfModelChanges.cs" />
+    <Compile Include="Customization\FormsAuthenticationServices.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

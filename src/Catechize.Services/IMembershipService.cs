@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Catechize.Model;
+using System.Web.Security;
 
 namespace Catechize.Services
 {
@@ -26,6 +27,7 @@ namespace Catechize.Services
         string GetEmail(string username);
         bool IsUsernameAvailable(string username);
         bool IsUsernameWellFormed(string username);
+        string[] GetRoles(string username);
     }
 
     public class MembershipService : MembershipServiceBase
@@ -36,32 +38,65 @@ namespace Catechize.Services
 
         public override bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            return Membership.ValidateUser(username, password);
         }
 
         public override MembershipCreateStatus CreateUser(string username, string password, string email)
         {
-            throw new NotImplementedException();
+            MembershipCreateStatus status = new MembershipCreateStatus();
+            
+            Membership.CreateUser(username, password, email, string.Empty, string.Empty, true, out status);
+
+            return status;
         }
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return Membership.GetUser(username, false).ChangePassword(oldPassword, newPassword);
         }
 
         public override bool ChangeEmail(string username, string oldEmail, string newEmail)
         {
-            throw new NotImplementedException();
+            MembershipUser user = Membership.GetUser(username, false);
+            
+            if (user.Email.Equals(oldEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                user.Email = newEmail;
+                Membership.UpdateUser(user);
+                return true;
+            }
+
+            return false;
         }
 
         public override bool IsUsernameAvailable(string username)
         {
-            throw new NotImplementedException();
+            if (null == Membership.GetUser(username, false))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override bool ResetPassword(string username, out string newPassword)
         {
-            throw new NotImplementedException();
+            try
+            {
+                newPassword = Membership.GetUser(username).ResetPassword();
+            }
+            catch (Exception ex)
+            {
+                newPassword = string.Empty;
+                return false;
+            }
+
+            return true;
+        }
+
+        public override string[] GetRoles(string username)
+        {
+            return Roles.GetRolesForUser(username);
         }
     }
 
@@ -145,5 +180,7 @@ namespace Catechize.Services
         {
             throw new NotImplementedException();
         }
+
+        public abstract string[] GetRoles(string username);
     }
 }

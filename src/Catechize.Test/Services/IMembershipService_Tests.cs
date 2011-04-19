@@ -5,6 +5,7 @@ using System.Text;
 using Catechize.Services;
 using Xunit;
 using System.Text.RegularExpressions;
+using System.Web.Security;
 
 namespace Catechize.Test
 {
@@ -100,7 +101,7 @@ namespace Catechize.Test
             foreach (var di in _credentials)
             {
                 if (di.Item1.Equals(username, StringComparison.OrdinalIgnoreCase))
-                    return MembershipCreateStatus.UsernameTaken;
+                    return MembershipCreateStatus.DuplicateUserName;
             }
 
             this._credentials.Add(new Tuple<string, string, string>(username, password, email));
@@ -253,6 +254,12 @@ namespace Catechize.Test
             }
 
             return true;
+        }
+
+        // TODO: Test
+        public override string[] GetRoles(string username)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -597,7 +604,7 @@ namespace Catechize.Test
             var takenUsername = "person1";
             var validPassword = "password1";
 
-            Assert.Equal(MembershipCreateStatus.UsernameTaken,
+            Assert.Equal(MembershipCreateStatus.DuplicateUserName,
                 service.CreateUser(takenUsername, validPassword, VALID_EMAIL_ADDRESS));
         }
 

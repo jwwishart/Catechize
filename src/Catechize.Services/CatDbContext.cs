@@ -13,15 +13,14 @@ namespace Catechize.Services
     public class CatDbContext : System.Data.Entity.DbContext
     {
         public DbSet<Course> Courses { get; set; }
-
-
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            //modelBuilder.Entity<CultureInfo>().Property(p => p.Name)
-            //    .HasColumnName("CultureName");
-                
+            modelBuilder.Entity<CourseLanguage>()
+                .Ignore(c => c.Culture);
+
         }
 
     }

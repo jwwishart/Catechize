@@ -10,6 +10,7 @@ namespace Catechize {
         public static void RegisterServices(IKernel kernel) {
             kernel.Bind<ICatechizeControllerService>().To<DefaultCatechizeControllerService>();
 
+            kernel.Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
             kernel.Bind<IMembershipService>().To<MembershipService>();
         }
 

@@ -9,6 +9,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using Catechize.Models;
 using System.Text;
+using Catechize.Services;
+using Catechize.Customization;
 
 namespace Catechize.Controllers
 {
@@ -17,10 +19,22 @@ namespace Catechize.Controllers
         public IFormsAuthenticationService FormsService { get; set; }
         public IMembershipService MembershipService { get; set; }
 
+
+        // Constructors
+        //
+
+        public AccountController(
+            IFormsAuthenticationService formsService,
+            IMembershipService membershipService)
+        {
+            this.FormsService = formsService;
+            this.MembershipService = membershipService;
+        }
+
         protected override void Initialize(RequestContext requestContext)
         {
-            if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-            if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
+            //if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
+            //if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
 
             base.Initialize(requestContext);
         }
@@ -39,15 +53,9 @@ namespace Catechize.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ValidateUser(model.Email, model.Password))
+                if (MembershipService.ValidateUser(model.Username, model.Password))
                 {
-                    var cryptoService = System.Security.Cryptography.SHA1CryptoServiceProvider.Create();
-
-                    // TODO: Change the username to an identifier instead of an email address.
-                    byte[] bytes = Encoding.UTF8.GetBytes(model.Email.ToCharArray());
-
-                    FormsService.SignIn(Encoding.UTF8.GetString(cryptoService.ComputeHash(bytes))
-                        , model.RememberMe);
+                    FormsService.SignIn(model.Username, model.RememberMe);
 
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -85,7 +93,7 @@ namespace Catechize.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.MaxPasswordLength = MembershipService.MinPasswordLength;
             return View();
         }
 
@@ -95,7 +103,7 @@ namespace Catechize.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Email, model.Password);
+                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Username, model.Password, model.Email);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -120,6 +128,14 @@ namespace Catechize.Controllers
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
             return View(model);
         }
+
+        [HttpGet]
+        [AjaxOnly]
+        public ActionResult IsUsernameAvailable(string username)
+        {
+            return Json(MembershipService.IsUsernameAvailable(username));
+        }
+
 
         // **************************************
         // URL: /Account/ChangePassword

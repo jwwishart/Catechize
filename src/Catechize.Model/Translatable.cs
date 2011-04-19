@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Catechize.Model
 {
-    public abstract class Translatable<T> where T : class, IHasCulture
+    public abstract class Translatable<T> where T : HasCulture
     {
         public IList<T> Translations { get; set; }
 

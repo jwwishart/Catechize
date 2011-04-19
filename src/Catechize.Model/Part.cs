@@ -13,7 +13,7 @@ namespace Catechize.Model
         public int OrdinalNo { get; set; }
     }
 
-    public class PartLanguage : IHasCulture
+    public class PartLanguage : HasCulture
     {
         public int CourseID { get; set; }
         public int OrdinalNo { get; set; }

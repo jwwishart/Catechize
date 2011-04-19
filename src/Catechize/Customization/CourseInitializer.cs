@@ -5,6 +5,7 @@ using System.Web;
 using Catechize.Services;
 using System.Data.Entity;
 using Catechize.Model;
+using System.Web.Security;
 
 namespace Catechize.Customization
 {
@@ -21,6 +22,20 @@ namespace Catechize.Customization
 
             courses.ForEach(c => context.Courses.Add(c));
             context.SaveChanges();
+
+            Membership.CreateUser("master", "qwerty", "jwwishart@hotmail.com");
+            Membership.CreateUser("jwwishart", "qwerty", "jwwishart@gmail.com");
+            
+            Roles.CreateRole("Master");
+            Roles.CreateRole("Administrator");
+            Roles.CreateRole("Translator");
+            Roles.CreateRole("Student");
+            Roles.CreateRole("Designer");
+            Roles.CreateRole("Grader");
+            Roles.CreateRole("Manager");
+
+            Roles.AddUsersToRole(new string[] { "master" }, "Master");
+            Roles.AddUsersToRole(new string[] { "jwwishart" }, "student");
         }
     }
 }
