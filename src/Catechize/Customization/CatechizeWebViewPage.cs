@@ -9,7 +9,7 @@ namespace Catechize.Customization
 {
 
     // Kudos: http://haacked.com/archive/2011/02/21/changing-base-type-of-a-razor-view.aspx
-    // But it didn't quite work correctly.
+    // But it didn't quite work correctly; this works with razor views.
     public abstract class CatechizeWebViewPage<TModel> : WebViewPage<TModel>
     {
         public LinkToGenerationHelper<TModel> LinkTo { get; set; }

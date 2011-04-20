@@ -13,8 +13,8 @@
         </sectionGroup>
     </configSections>
     <connectionStrings>
-        <add name="ConnectionString"
-             connectionString="Server=localhost\sqlexpress; 
+        <add name="CatDbContext"
+             connectionString="Server=localhost; 
                                Database=databaseName; 
                                User ID=sqlUser;
                                Password=password;"
@@ -50,7 +50,7 @@
                 <clear />
                 <add name="CatechizeMembershipProvider" 
                      type="System.Web.Security.SqlMembershipProvider" 
-                     connectionStringName="ConnectionString" 
+                     connectionStringName="CatDbContext" 
                      enablePasswordRetrieval="false" 
                      enablePasswordReset="true" 
                      requiresQuestionAndAnswer="false" 
@@ -75,7 +75,7 @@
                 <clear />
                 <add name="CatechizeRoleProvider" 
                      type="System.Web.Security.SqlRoleProvider" 
-                     connectionStringName="ConnectionString" 
+                     connectionStringName="CatDbContext" 
                      applicationName="/" />
                 <!--<add name="AspNetWindowsTokenRoleProvider" 
                      type="System.Web.Security.WindowsTokenRoleProvider" 
