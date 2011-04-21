@@ -5,7 +5,18 @@ namespace Catechize.Model
 {
     public abstract class Translatable<T> where T : HasCulture
     {
-        public IList<T> Translations { get; set; }
+        private IList<T> _translations = new List<T>();
+
+        public IList<T> Translations {
+            get
+            {
+                return _translations;
+            }
+            set
+            {
+                _translations = value;
+            }
+        }
 
         public T GetLanguage(CultureInfo cultureInfo)
         {

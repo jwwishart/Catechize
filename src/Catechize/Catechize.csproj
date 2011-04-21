@@ -44,6 +44,9 @@
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Helpers">
+      <HintPath>..\packages\microsoft-web-helpers.1.1\lib\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="MigraDoc.DocumentObjectModel">
       <HintPath>..\..\..\..\..\..\..\_Development\goodnews\_INBOX\PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\MigraDoc.DocumentObjectModel.dll</HintPath>
     </Reference>
@@ -118,8 +121,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ControllerHelpers.cs" />
     <Compile Include="Helpers\GravatarHelpers.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\IPrincipalExtensions.cs" />
     <Compile Include="Helpers\LinkToGenerationHelperExtensions.cs" />
     <Compile Include="Helpers\LinkToGenerationHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -129,10 +134,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LinkResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\ICatechizeControllerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Catechize.css" />
+    <Content Include="Facebook\Docs\content\images\FBCoreSettings.png" />
+    <Content Include="Facebook\Docs\content\images\FBCreateApplication.png" />
+    <Content Include="Facebook\Docs\content\images\webx-bkg.png" />
+    <Content Include="Facebook\Docs\content\images\webx-content-bkg.jpg" />
+    <Content Include="Facebook\Docs\content\images\webx-icon.png" />
+    <Content Include="Facebook\Docs\content\images\wm-mysite-settings.png" />
+    <Content Include="Facebook\Docs\content\images\wm-site-settings.png" />
+    <Content Include="Facebook\Docs\content\Site.css" />
+    <Content Include="Facebook\Docs\reference.htm" />
+    <Content Include="Facebook\Docs\startHere.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -189,6 +203,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
     <Folder Include="Views\Mail\" />
@@ -203,6 +218,10 @@
     <ProjectReference Include="..\Catechize.Model\Catechize.Model.csproj">
       <Project>{7BDF30D4-2FB9-4DBA-A17D-F2065387C8BE}</Project>
       <Name>Catechize.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catechize.Services.SqlServer\Catechize.Services.SqlServer.csproj">
+      <Project>{BD3DEEA0-A472-4EA3-9B74-928230A62729}</Project>
+      <Name>Catechize.Services.SqlServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Catechize.Services\Catechize.Services.csproj">
       <Project>{2FD2E695-5298-477A-A155-756EE357EFE0}</Project>
@@ -222,18 +241,22 @@
     <Content Include="Views\Test\GravatarTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Courses\ListAllCourses.cshtml" />
+    <Content Include="Views\Courses\ListCourses_Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Courses\NewCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Courses\ViewCourse.cshtml" />
+    <Content Include="Views\Courses\ViewCourse_Student.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Courses\EditCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Account\Unauthorized.cshtml" />
+    <Content Include="Views\Courses\ListCourses_Student.cshtml" />
+    <Content Include="Views\Courses\ViewCourse_Admin.cshtml" />
+    <Content Include="Facebook\Login.cshtml" />
     <None Include="Web.config.sample" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

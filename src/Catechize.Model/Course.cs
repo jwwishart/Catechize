@@ -15,14 +15,16 @@ namespace Catechize.Model
         [Required(ErrorMessageResourceName="FieldRequired", 
                   ErrorMessageResourceType=typeof(Catechize.Model.Resources.Validation)) ]
         [StringLength(50)]
+        [MaxLength(50)]
         #endregion
-        public string Identifier { get; set; }
+        public string CourseID { get; set; }
 
         #region Attributes
         [Required(ErrorMessageResourceName = "FieldRequired",
                   ErrorMessageResourceType = typeof(Catechize.Model.Resources.Validation))]
         [StringLength(200, ErrorMessageResourceName = "StringToLong",
                   ErrorMessageResourceType = typeof(Catechize.Model.Resources.Validation))]
+        [MaxLength(200)]
         #endregion
         public string Title { get; set; }
 
@@ -32,6 +34,7 @@ namespace Catechize.Model
         [StringLength(1000, ErrorMessageResourceName = "StringToLong",
                   ErrorMessageResourceType = typeof(Catechize.Model.Resources.Validation))]
         [DataType(DataType.MultilineText)]
+        [MaxLength(1000)]
         #endregion
         public string Description { get; set; }
 
@@ -39,17 +42,10 @@ namespace Catechize.Model
         // regardless of the state of each individual language.
         public bool IsEnabled { get; set; }
 
-        public virtual ICollection<int> PrerequisiteCourses { get; set; }
+        public virtual ICollection<Course> PrerequisiteCourses { get; set; }
+        public virtual ICollection<Part> Parts { get; set; }
+        public virtual ICollection<CourseRegistration> CourseRegistrations { get; set; }
     }
 
-    public class CourseLanguage : HasCulture
-    {
-        public int CourseLanguageID { get; set; }
-        public int CourseID { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-
-        public bool IsPublished { get; set; }
-        public bool IsEnabled { get; set; }
-    }
+   
 }

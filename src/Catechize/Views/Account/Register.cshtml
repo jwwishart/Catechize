@@ -9,7 +9,7 @@
     Use the form below to create a new account. 
 </p>
 <p>
-    Passwords are required to be a minimum of @ViewBag.PasswordLength characters in length.
+    Passwords are required to be a minimum of @ViewBag.MaxPasswordLength characters in length.
 </p>
 
 @using (Html.BeginForm()) {
@@ -17,6 +17,14 @@
     <div>
         <fieldset>
             <legend>Create an Account</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Username)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Username)
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
 
             <div class="editor-label">
                 @Html.LabelFor(m => m.Email)
@@ -42,6 +50,8 @@
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
 
+            @* http://www.dotnetcurry.com/ShowArticle.aspx?ID=611 *@
+            @ReCaptcha.GetHtml(theme: System.Configuration.ConfigurationManager.AppSettings["ReCaptcha_Theme"])
             <p>
                 <input type="submit" value="Register" />
             </p>

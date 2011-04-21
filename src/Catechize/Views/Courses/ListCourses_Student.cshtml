@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Catechize.Model.Course>
+@{
+    ViewBag.Title = "ListAllCourses";
+}
+<h2>
+    Courses</h2>
+<table>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Languages available
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @LinkTo.ViewCourse(item)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @foreach(Catechize.Model.CourseLanguage language in item.Translations) {
+                    @language.Culture.NativeName;
+                }
+            </td>
+        </tr>
+    }
+</table>

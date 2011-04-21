@@ -11,6 +11,8 @@ using Catechize.Models;
 using System.Text;
 using Catechize.Services;
 using Catechize.Customization;
+using Microsoft.Web.Helpers;
+using System.Configuration;
 
 namespace Catechize.Controllers
 {
@@ -31,20 +33,42 @@ namespace Catechize.Controllers
             this.MembershipService = membershipService;
         }
 
-        protected override void Initialize(RequestContext requestContext)
+        // TODO: remove for production
+        public ActionResult SetupDatabaseDefaults()
         {
-            //if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-            //if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
+            // Note that you might have to adjust the web.config file
+            // membership settings to get these appropriately created.
+            Membership.CreateUser("master", "qwerty", "jwwishart@hotmail.com");
+            Membership.CreateUser("jwwishart", "qwerty", "jwwishart@gmail.com");
 
-            base.Initialize(requestContext);
+            Roles.CreateRole("Master");
+            Roles.CreateRole("Administrator");
+            Roles.CreateRole("Translator");
+            Roles.CreateRole("Student");
+            Roles.CreateRole("Designer");
+            Roles.CreateRole("Grader");
+            Roles.CreateRole("Manager");
+
+            Roles.AddUsersToRole(new string[] { "master" }, "Master");
+            Roles.AddUsersToRole(new string[] { "jwwishart" }, "student");
+
+            return RedirectToAction("Index", "Home");
         }
+
 
         // **************************************
         // URL: /Account/LogOn
         // **************************************
 
+
         public ActionResult LogOn()
         {
+            // Redirect the Use if they are authenticated and are sent here
+            // TODO: This might not be 100% adequate?
+            // Kudos: http://stackoverflow.com/questions/238437/why-does-authorizeattribute-redirect-to-the-login-page-for-authentication-and-aut/705485#705485
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+                return RedirectToAction("Unauthorized", new { ReturnUrl = Request.UrlReferrer });
+
             return View();
         }
 
@@ -102,30 +126,27 @@ namespace Catechize.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Username, model.Password, model.Email);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                // Kudos: http://www.dotnetcurry.com/ShowArticle.aspx?ID=611
+                if (ReCaptcha.Validate(privateKey: 
+                    ConfigurationManager.AppSettings["ReCaptcha_PrivateKey"]))
                 {
-                    var cryptoService = System.Security.Cryptography.SHA1CryptoServiceProvider.Create();
+                    // Attempt to register the user
+                    MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Username, model.Password, model.Email);
 
-                    // TODO: Change the username to an identifier instead of an email address.
-                    byte[] bytes = Encoding.UTF8.GetBytes(model.Email.ToCharArray());
-
-                    FormsService.SignIn(Encoding.UTF8.GetString(cryptoService.ComputeHash(bytes))
-                        , false);
-
-                    FormsService.SignIn(model.Email, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        FormsService.SignIn(model.Username, true);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                    }
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.MaxPasswordLength = MembershipService.MinPasswordLength;
             return View(model);
         }
 
@@ -175,6 +196,12 @@ namespace Catechize.Controllers
 
         public ActionResult ChangePasswordSuccess()
         {
+            return View();
+        }
+
+        public ActionResult Unauthorized(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 

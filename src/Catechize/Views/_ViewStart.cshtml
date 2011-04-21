@@ -1,3 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@* ReCaptcha: Get Keys Here http://www.google.com/recaptcha *@
+@{
+    ReCaptcha.PublicKey = System.Configuration.ConfigurationManager
+        .AppSettings["ReCaptcha_PublicKey"];
+}

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
 
 namespace Catechize.Model
 {
-    public class User
+    public class UserProfile
     {
         #region Attributes
         [Key]
@@ -16,13 +17,6 @@ namespace Catechize.Model
         #endregion
         public string Username { get; set; }
 
-        #region
-        [Required(ErrorMessageResourceName = "FieldRequired",
-                  ErrorMessageResourceType = typeof(Catechize.Model.Resources.Validation))]
-        [StringLength(254, MinimumLength = 3)]
-        #endregion
-        public string Email { get; set; }
-
-        public IList<string> Roles { get; set; }
+        public virtual ICollection<CourseRegistration> CourseRegistrations { get; set; }
     }
 }

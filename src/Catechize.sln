@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Test", "Catechize
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Integration", "Catechize.Integration\Catechize.Integration.csproj", "{1F4DB464-75A9-4612-BDF4-EF322BBB8B51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catechize.Services.SqlServer", "Catechize.Services.SqlServer\Catechize.Services.SqlServer.csproj", "{BD3DEEA0-A472-4EA3-9B74-928230A62729}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{1F4DB464-75A9-4612-BDF4-EF322BBB8B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F4DB464-75A9-4612-BDF4-EF322BBB8B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F4DB464-75A9-4612-BDF4-EF322BBB8B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3DEEA0-A472-4EA3-9B74-928230A62729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3DEEA0-A472-4EA3-9B74-928230A62729}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3DEEA0-A472-4EA3-9B74-928230A62729}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3DEEA0-A472-4EA3-9B74-928230A62729}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

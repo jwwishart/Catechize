@@ -10,6 +10,21 @@ using System.Web.Security;
 using Catechize.Services;
 using System.Configuration;
 
+// TODO: Put this somewhere better
+[Flags]
+public enum Role
+{
+    Master,  // Do anything
+    Admin,   // Anything but administer Master accounts.
+
+    Manager, // Anything a Designer, Translator or Grader can do
+    Designer,
+    Translator,
+    Grader,
+
+    Student
+}
+
 namespace Catechize.Models
 {
     
@@ -54,6 +69,8 @@ namespace Catechize.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Username")]
+        [MaxLength(50)]
+        [StringLength(50, MinimumLength=4)]
         public string Username { get; set; }
 
         [Required]

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Data.Entity;
-using Catechize.Services;
-using Catechize.Customization;
 using System.Web.Security;
+using Catechize.Services;
 using Elmah;
-using System.Security.Principal;
-using Ninject;
 
 namespace Catechize
 {
@@ -125,7 +121,8 @@ namespace Catechize
             RegisterRoutes(RouteTable.Routes);
 
             // TODO: Remove before publishing
-            Database.SetInitializer<CatDbContext>(new CourseInitializer());
+            Database.SetInitializer<Catechize.Services.SqlServer.CatDbContext>(
+                new Catechize.Services.SqlServer.CourseInitializer());
         }
     }
 }

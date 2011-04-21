@@ -2,14 +2,15 @@ using System.Web.Mvc;
 using Ninject;
 using Ninject.Mvc3;
 using Catechize.Services;
+using Catechize.Services.SqlServer;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Catechize.AppStart_NinjectMVC3), "Start")]
 
 namespace Catechize {
     public static class AppStart_NinjectMVC3 {
         public static void RegisterServices(IKernel kernel) {
-            kernel.Bind<ICatechizeControllerService>().To<DefaultCatechizeControllerService>();
-
+            kernel.Bind<ICourseService>().To<CourseService>();
+            
             kernel.Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
             kernel.Bind<IMembershipService>().To<MembershipService>();
         }

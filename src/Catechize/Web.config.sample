@@ -23,13 +23,18 @@
     <appSettings>
         <add key="ClientValidationEnabled" value="true" />
         <add key="UnobtrusiveJavaScriptEnabled" value="true" />
-        <add key="MinPasswordLength" value="6"/>
         
         <!-- Catechize Settings-->
         <add key="DefaultLocale" value="en"/> <!-- Culture when creating new localized resources in database
                                                    Overides browser culture -->
         <add key="EnableTwitterAuthentication" value="false"/>
         <add key="EnableFacebookAuthentication" value="false"/>
+
+        <!-- ReCaptcha: Get Keys Here http://www.google.com/recaptcha -->
+        <add key="ReCaptcha_PublicKey" value="key_here"/>
+        <add key="ReCaptcha_PrivateKey" value="key_here"/>
+        <add key="ReCaptcha_Theme" value="white" /> <!-- http://wiki.recaptcha.net/index.php/Theme-->
+        
     </appSettings>
     <system.web>
         <globalization culture="auto" uiCulture="auto"/>

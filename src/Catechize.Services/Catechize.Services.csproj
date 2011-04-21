@@ -47,16 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CatDbContext.cs" />
-    <Compile Include="IDataAccess.cs" />
-    <Compile Include="IHtmlPageRepository.cs" />
-    <Compile Include="Repositories\IPageRepository.cs" />
-    <Compile Include="Repositories\IPartRepository.cs" />
-    <Compile Include="Repositories\ICourseRepository.cs" />
-    <Compile Include="Repositories\IStudentRepository.cs" />
+    <Compile Include="SORT\IDataAccess.cs" />
+    <Compile Include="SORT\IHtmlPageRepository.cs" />
+    <Compile Include="SORT\IPageRepository.cs" />
+    <Compile Include="SORT\IPartRepository.cs" />
+    <Compile Include="Repositories\ICourseService.cs" />
+    <Compile Include="SORT\IStudentRepository.cs" />
     <Compile Include="IMembershipService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="SORT\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Catechize.Model\Catechize.Model.csproj">

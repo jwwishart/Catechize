@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Answer.cs" />
     <Compile Include="Course.cs" />
+    <Compile Include="CourseLanguage.cs" />
+    <Compile Include="CourseRegistration.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="HasCulture.cs" />
     <Compile Include="Page.cs" />

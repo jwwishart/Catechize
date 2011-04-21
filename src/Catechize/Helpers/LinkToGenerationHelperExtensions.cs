@@ -61,7 +61,7 @@ namespace Catechize.Helpers
         public static MvcHtmlString EditCourse(this LinkToGenerationHelper helper, Course course, string label)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("EditCourse", CoursesControllerName, new { courseName = course.Identifier });
+            var url = urlHelper.Action("EditCourse", CoursesControllerName, new { courseName = course.CourseID });
 
             return GenerateAnchor(helper, url, label);
         }
@@ -83,9 +83,16 @@ namespace Catechize.Helpers
         public static MvcHtmlString ViewCourse(this LinkToGenerationHelper helper, Course course, string label)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("ViewCourse", CoursesControllerName, new { courseName = course.Identifier });
+            var url = urlHelper.Action("ViewCourse", CoursesControllerName, new { courseName = course.CourseID });
 
             return GenerateAnchor(helper, url, label);
+        }
+
+        public static MvcHtmlString RegisterForCourse(this LinkToGenerationHelper helper, Course course) {
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("Register", CoursesControllerName, new { courseName = course.CourseID });
+
+            return GenerateAnchor(helper, url, LinkResources.Register);
         }
     }
 
