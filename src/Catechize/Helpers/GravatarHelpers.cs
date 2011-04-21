@@ -21,30 +21,30 @@ namespace Catechize.Helpers
     // Kudos to Rob Connery http://blog.wekeroad.com/2010/01/20/my-favorite-helpers-for-aspnet-mvc
     public static class GravatarHelpers
     {
-        public static string Gravatar(this HtmlHelper helper, string email)
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email)
         {
             var url = GetGravatarUrl(helper, CleanupEmail(email), 40, GetDefaultGravatarString(GravatarDefault.MysteryMan));
-            return ConstructImgTag(url);
+            return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
-        public static string Gravatar(this HtmlHelper helper, string email, int size)
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size)
         {
             var url = GetGravatarUrl(helper, CleanupEmail(email), size, GetDefaultGravatarString(GravatarDefault.MysteryMan));
-            return ConstructImgTag(url);
+            return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
-        public static string Gravatar(this HtmlHelper helper, string email, int size, string defaultImageUrl)
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size, string defaultImageUrl)
         {
             var url = GetGravatarUrl(helper, CleanupEmail(email), size, UrlEncode(helper, defaultImageUrl));
-            return ConstructImgTag(url);
+            return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
-        public static string Gravatar(this HtmlHelper helper, string email, int size, GravatarDefault defaultImage)
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size, GravatarDefault defaultImage)
         {
             var mode = GetDefaultGravatarString(defaultImage);
 
             var url = GetGravatarUrl(helper, CleanupEmail(email), size, mode);
-            return ConstructImgTag(url);
+            return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
         public static string GetDefaultGravatarString(GravatarDefault defaultGravatar) {

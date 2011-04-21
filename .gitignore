@@ -2,6 +2,7 @@
 src/Catechize/bin
 src/Catechize/obj
 src/Catechize/Web.config
+src/Catechize/App_Data
 
 src/Catechize.Services/bin
 src/Catechize.Services/obj

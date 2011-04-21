@@ -51,7 +51,7 @@
             </div>
 
             @* http://www.dotnetcurry.com/ShowArticle.aspx?ID=611 *@
-            @ReCaptcha.GetHtml(theme: System.Configuration.ConfigurationManager.AppSettings["ReCaptcha_Theme"])
+            @ReCaptcha.GetHtml(theme: System.Configuration.ConfigurationManager.AppSettings["ReCaptcha_Theme"], language: UICulture)
             <p>
                 <input type="submit" value="Register" />
             </p>
