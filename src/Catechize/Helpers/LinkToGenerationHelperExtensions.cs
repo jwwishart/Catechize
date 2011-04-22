@@ -94,6 +94,14 @@ namespace Catechize.Helpers
 
             return GenerateAnchor(helper, url, LinkResources.Register);
         }
+
+        public static MvcHtmlString RegisterForCourse(this LinkToGenerationHelper helper, Course course, string label)
+        {
+            var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            var url = urlHelper.Action("Register", CoursesControllerName, new { courseName = course.CourseID });
+
+            return GenerateAnchor(helper, url, label);
+        }
     }
 
     

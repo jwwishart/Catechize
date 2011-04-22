@@ -88,11 +88,20 @@ namespace Catechize.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register for Course.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register for Course.
+        /// </summary>
+        internal static string Register_Long {
+            get {
+                return ResourceManager.GetString("Register_Long", resourceCulture);
             }
         }
         

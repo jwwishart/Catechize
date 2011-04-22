@@ -21,6 +21,15 @@
              providerName="System.Data.SqlClient"/>
     </connectionStrings>
     <appSettings>
+        <!-- There are 3 modes:
+             - Development
+             - Staging
+             - Production
+             
+             Each of these modes adjusts different functionality like emails so
+             that development can be done without unwanted consequences.
+        -->
+        <add key="AppMode" value="Development"/>
         <add key="ClientValidationEnabled" value="true" />
         <add key="UnobtrusiveJavaScriptEnabled" value="true" />
         

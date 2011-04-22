@@ -39,7 +39,7 @@ namespace Catechize.Services.SqlServer
             throw new NotImplementedException();
         }
 
-        public void Delete(int ID)
+        public void Delete(string courseName)
         {
             throw new NotImplementedException();
         }

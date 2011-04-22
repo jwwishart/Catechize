@@ -15,18 +15,15 @@ namespace Catechize.Services
 
     public class FormsAuthenticationService : IFormsAuthenticationService
     {
-        private IMembershipService MembershipService { get; set; }
-
-        public FormsAuthenticationService(IMembershipService membership)
+        public FormsAuthenticationService()
         {
-            this.MembershipService = membership;
         }
 
         public void SignIn(string username, bool createPersistentCookie)
         {
             if (String.IsNullOrEmpty(username)) throw new ArgumentException("Value cannot be null or empty.", "userName");
             
-            IEnumerable<string> roles = MembershipService.GetRoles(username)
+            IEnumerable<string> roles = Roles.GetRolesForUser(username)
                         .AsEnumerable<string>();
 
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(

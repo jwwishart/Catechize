@@ -7,6 +7,10 @@ src/Catechize/App_Data
 src/Catechize.Services/bin
 src/Catechize.Services/obj
 
+src/Catechize.Services.SqlServer/bin
+src/Catechize.Services.SqlServer/obj
+
+
 src/Catechize.Test/bin
 src/Catechize.Test/obj
 

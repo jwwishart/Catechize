@@ -102,9 +102,6 @@ namespace Catechize
 
             if (Context.User != null)
             {
-                var membershipService = DependencyResolver.Current
-                    .GetService<IMembershipService>();
-
                 var principal = new GenericPrincipal( 
                     new GenericIdentity(authTicket.Name, "CatechizeCustom"),
                     authTicket.UserData.Split(',') /* User Roles */);

@@ -127,6 +127,9 @@
     <value>New Course</value>
   </data>
   <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Register_Long" xml:space="preserve">
     <value>Register for Course</value>
   </data>
   <data name="ViewCourse" xml:space="preserve">

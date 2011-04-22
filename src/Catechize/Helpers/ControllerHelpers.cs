@@ -9,6 +9,15 @@ namespace Catechize.Helpers
 {
     public static class ControllerHelpers
     {
+        public static ActionResult RedirectToHome(this Controller controller)
+        {
+            RouteValueDictionary values = new RouteValueDictionary();
+            values.Add("controller", "Home");
+            values.Add("action", "Index");
+
+            return new RedirectToRouteResult(values);
+        }
+        
         public static ActionResult RedirectToUnauthorized(this Controller controller) {
             RouteValueDictionary values = new RouteValueDictionary();
             values.Add("controller", "Account");

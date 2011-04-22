@@ -8,11 +8,11 @@ namespace Catechize.Services
 {
     public interface ICourseService
     {
-        Course GetByID(string courseID);
+        Course GetByID(string courseName);
         void Create(Course value);
         void Update(Course value);
         void Delete(Course value);
-        void Delete(int ID);
+        void Delete(string courseName);
         IQueryable<Course> Query();
     }
 

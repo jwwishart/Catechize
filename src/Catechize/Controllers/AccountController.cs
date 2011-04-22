@@ -13,46 +13,54 @@ using Catechize.Services;
 using Catechize.Customization;
 using Microsoft.Web.Helpers;
 using System.Configuration;
+using Catechize.Helpers;
 
 namespace Catechize.Controllers
 {
     public class AccountController : Controller
     {
         public IFormsAuthenticationService FormsService { get; set; }
-        public IMembershipService MembershipService { get; set; }
 
 
         // Constructors
         //
 
         public AccountController(
-            IFormsAuthenticationService formsService,
-            IMembershipService membershipService)
+            IFormsAuthenticationService formsService)
         {
             this.FormsService = formsService;
-            this.MembershipService = membershipService;
         }
 
         // TODO: remove for production
         public ActionResult SetupDatabaseDefaults()
         {
-            // Note that you might have to adjust the web.config file
-            // membership settings to get these appropriately created.
-            Membership.CreateUser("master", "qwerty", "jwwishart@hotmail.com");
-            Membership.CreateUser("jwwishart", "qwerty", "jwwishart@gmail.com");
+            // Only allow this is Dev or S
+            if (Settings.AppMode != ApplicationMode.Production)
+            {
+                if (Membership.GetUser("master") == null)
+                {
+                    // Note that you might have to adjust the web.config file
+                    // membership settings to get these appropriately created.
+                    Membership.CreateUser("master", "qwerty", "jwwishart@hotmail.com");
+                    Membership.CreateUser("jwwishart", "qwerty", "jwwishart@gmail.com");
 
-            Roles.CreateRole("Master");
-            Roles.CreateRole("Administrator");
-            Roles.CreateRole("Translator");
-            Roles.CreateRole("Student");
-            Roles.CreateRole("Designer");
-            Roles.CreateRole("Grader");
-            Roles.CreateRole("Manager");
+                    Roles.CreateRole("Master");
+                    Roles.CreateRole("Administrator");
+                    Roles.CreateRole("Translator");
+                    Roles.CreateRole("Student");
+                    Roles.CreateRole("Designer");
+                    Roles.CreateRole("Grader");
+                    Roles.CreateRole("Manager");
 
-            Roles.AddUsersToRole(new string[] { "master" }, "Master");
-            Roles.AddUsersToRole(new string[] { "jwwishart" }, "student");
+                    Roles.AddUsersToRole(new string[] { "master" }, "Master");
+                    Roles.AddUsersToRole(new string[] { "jwwishart" }, "student");
+                }
 
-            return RedirectToAction("Index", "Home");
+                return this.RedirectToHome();
+            }
+            else {
+                return HttpNotFound();
+            }
         }
 
 
@@ -77,7 +85,7 @@ namespace Catechize.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ValidateUser(model.Username, model.Password))
+                if (Membership.ValidateUser(model.Username, model.Password))
                 {
                     FormsService.SignIn(model.Username, model.RememberMe);
 
@@ -117,13 +125,14 @@ namespace Catechize.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.MaxPasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.MaxPasswordLength = Membership.MinRequiredPasswordLength;
             return View();
         }
 
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
+            // TODO: Check for username well-formedness! (MembershipService.IsUsernameWellFormed)
             if (ModelState.IsValid)
             {
                 // Kudos: http://www.dotnetcurry.com/ShowArticle.aspx?ID=611
@@ -131,22 +140,24 @@ namespace Catechize.Controllers
                     ConfigurationManager.AppSettings["ReCaptcha_PrivateKey"]))
                 {
                     // Attempt to register the user
-                    MembershipCreateStatus createStatus = MembershipService.CreateUser(model.Username, model.Password, model.Email);
+                    MembershipCreateStatus status = new MembershipCreateStatus();
 
-                    if (createStatus == MembershipCreateStatus.Success)
+                    Membership.CreateUser(model.Username, model.Password, model.Email, string.Empty, string.Empty, true, out status);
+
+                    if (status == MembershipCreateStatus.Success)
                     {
                         FormsService.SignIn(model.Username, true);
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                        ModelState.AddModelError("", AccountValidation.ErrorCodeToString(status));
                     }
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.MaxPasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.MaxPasswordLength = Membership.MinRequiredPasswordLength;
             return View(model);
         }
 
@@ -154,7 +165,7 @@ namespace Catechize.Controllers
         [AjaxOnly]
         public ActionResult IsUsernameAvailable(string username)
         {
-            return Json(MembershipService.IsUsernameAvailable(username));
+            return Json((Membership.GetUser(username) == null));
         }
 
 
@@ -165,7 +176,7 @@ namespace Catechize.Controllers
         [Authorize]
         public ActionResult ChangePassword()
         {
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = Membership.MinRequiredPasswordLength;
             return View();
         }
 
@@ -175,8 +186,13 @@ namespace Catechize.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
-                {
+                MembershipUser user = Membership.GetUser(User.Identity.Name);
+
+                // TODO: Validate password???
+                // TODO: Consider this better.
+                if (user != null) {
+                    user.ChangePassword(model.OldPassword, model.NewPassword);
+                    Membership.UpdateUser(user);
                     return RedirectToAction("ChangePasswordSuccess");
                 }
                 else
@@ -186,7 +202,7 @@ namespace Catechize.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = Membership.MinRequiredPasswordLength;
             return View(model);
         }
 

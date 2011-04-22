@@ -13,7 +13,7 @@ namespace Catechize.Services.SqlServer
     public class CatDbContext : System.Data.Entity.DbContext
     {
         public DbSet<Course> Courses { get; set; }
-        public DbSet<UserProfile> Users { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -23,12 +23,6 @@ namespace Catechize.Services.SqlServer
                 .HasMany<CourseRegistration>(up => up.CourseRegistrations)
                 .WithOptional()
                 .HasForeignKey(k => k.CourseID)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<UserProfile>()
-                .HasMany<CourseRegistration>(up => up.CourseRegistrations)
-                .WithOptional()
-                .HasForeignKey(i => i.UserID)
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<Course>()
