@@ -6,6 +6,8 @@ namespace Catechize.Templating.ValueProcessors
     {
         public override string ProcessValue( string value ) {
             switch ( value.ToLower() ) {
+                case "labelcolon":
+                    return ":";
                 case "date":
                     return DateTime.Now.ToString( "dd-MMM-yyyy" );
                 case "time":

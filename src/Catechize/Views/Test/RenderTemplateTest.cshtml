@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "RenderTemplateTest";
+}
+
+<h2>RenderTemplateTest</h2>
+
+<table>    
+    @foreach ( object obj in Model ) {
+        <tr>
+            @Html.RenderTemplate( "TableRow", obj )
+        </tr>
+    }
+</table>
+

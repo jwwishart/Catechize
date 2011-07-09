@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Catechize.Templating;
 using System;
+using System.Collections;
 
 namespace Catechize.Controllers
 {
@@ -15,6 +16,15 @@ namespace Catechize.Controllers
         public ActionResult GravatarTest()
         {
             return View();
+        }
+
+        public ActionResult RenderTemplateTest() {
+            object [] model = {
+                new { Label="Name", Value="Justin Wishart"},
+                new { Label="Age", Value="31"}
+            };
+
+            return View( model );
         }
 
         public ActionResult TemplateTest() {

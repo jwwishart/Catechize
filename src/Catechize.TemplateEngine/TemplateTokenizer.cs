@@ -118,10 +118,13 @@ namespace Catechize.Templating
             while ( foundEndBrace == false && MoveNext() && isValidToken ) {
                 switch ( CurrentChar ) {
                     case ':':
-                        foundColon = true;
-                        key = currentSection.ToString();
-                        currentSection.Clear();
-                        continue;
+                        if ( foundColon == false ) {
+                            foundColon = true;
+                            key = currentSection.ToString();
+                            currentSection.Clear();
+                            continue;
+                        }
+                        break;
                     case '}':
                         foundEndBrace = true;
                         if ( foundColon ) {

@@ -201,6 +201,7 @@
     <Content Include="Facebook\Docs\reference.htm" />
     <Content Include="Facebook\Docs\startHere.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Templates\TableRow.html" />
     <Content Include="Templates\TestTemplate.html" />
     <Content Include="Templates\_subTemplate.html" />
     <Content Include="Web.config">
@@ -324,6 +325,7 @@
     <Content Include="Views\User\Account_Private.cshtml" />
     <Content Include="Views\User\Account_Personal.cshtml" />
     <Content Include="Views\Test\TemplateTest.cshtml" />
+    <Content Include="Views\Test\RenderTemplateTest.cshtml" />
     <None Include="Web.config.sample">
       <SubType>Designer</SubType>
     </None>

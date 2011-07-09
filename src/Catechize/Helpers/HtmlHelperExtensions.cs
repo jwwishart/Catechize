@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using System.Security.Principal;
+using Catechize.Templating;
 
 namespace Catechize.Helpers
 {
@@ -42,5 +43,15 @@ namespace Catechize.Helpers
             return MvcHtmlString.Create(builder.ToString());
         }
 
+        public static MvcHtmlString RenderTemplate( this HtmlHelper helper, string templateName ) {
+            return HtmlHelperExtensions.RenderTemplate( helper, templateName, null );
+        }
+
+        public static MvcHtmlString RenderTemplate( this HtmlHelper helper, string templateName, object model ) {
+            var content = TemplatingFactory.GetTemplateLoader().Load( templateName );
+
+            return MvcHtmlString.Create(
+                TemplatingFactory.GetTemplateEngine().ProcessTemplate( content, model ) );
+        }
     }
 }

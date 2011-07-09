@@ -1,0 +1,21 @@
+Template Table
+--------------
+TemplateName | varchar(100)
+Content | nvarchar(max)
+
+
+Template Class
+--------------
+Template.GetContent(string templateName);
+
+TemplateService .Get(templateName)
+				.Save(Template templ)
+				.Create(Template templ)
+				.Delete(Template templ)
+				
+ResourceLoader.Load(resourceKey)
+
+ResourceService .Get(resourceName)
+				.Save()
+				.Create()
+				.Delete()
