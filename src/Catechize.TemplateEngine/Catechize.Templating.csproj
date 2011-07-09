@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TemplateTokenizer.cs" />
     <Compile Include="ValueProcessors\AnchorValueProcessor.cs" />
     <Compile Include="ValueProcessors\ReflectionValueProcessor.cs" />
     <Compile Include="ValueProcessors\DateTimeNowPropertyReflectory.cs" />

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System;
 
 namespace Catechize.Templating.Web
 {
@@ -11,19 +12,14 @@ namespace Catechize.Templating.Web
         //
 
         public override int EngineVersion { get { return 1; } }
-        public string TemplateRegex { get; set; }
+        public ITemplateTokenizer Tokenizer {get; set;}
 
-        private StringBuilder Template { get; set; }
-        private string OriginalTemplate { get; set; }
-        private object DataSource { get; set; }
-        private MatchCollection Matches { get; set; }
-        
 
         // Constructors
-        // 
+        //
 
-        public WebTemplateEngine() {
-            TemplateRegex = @"(#|!#)\{[^:]+:[^:]+\}";
+        public WebTemplateEngine( ITemplateTokenizer tokenizer ) {
+            Tokenizer = tokenizer;    
         }
 
 
@@ -43,58 +39,49 @@ namespace Catechize.Templating.Web
         }
 
         public override string ProcessTemplate( string templateContents, object dataSource ) {
-            Initialize( templateContents, dataSource );
-            return ProcessTemplate_Internal();
+            return ProcessTemplate_Internal( templateContents, dataSource );
         }
 
 
         // Private Methods
         //
 
-        private void Initialize( string template, object data ) {
-            Template = new StringBuilder( template );
-            OriginalTemplate = template;
-            DataSource = data;
-            Matches = null;
-        }
+        private string ProcessTemplate_Internal(string template, object model) {
+            // Parse the document
+            StringBuilder newContent = new StringBuilder( template );
 
-        private string ProcessTemplate_Internal() {
-            Regex regex = new Regex( TemplateRegex, RegexOptions.Compiled & RegexOptions.IgnoreCase );
+            var tokens = Tokenizer.Parse( template );
 
-            this.Matches = regex.Matches( OriginalTemplate );
-
-            for ( int i = Matches.Count - 1; i > -1; i-- ) {
-                ProcessTemplateItem( Matches[i] );
+            for ( int i = tokens.Count - 1; i > -1; i-- ) {
+                ProcessTemplateItem( newContent, tokens[i], model );
             }
-            
-            return Template.ToString();
+
+            return newContent.ToString();
         }
 
-        private void ProcessTemplateItem( Match match ) {
-            var value = match.Value;
+        private void ProcessTemplateItem(StringBuilder newContent, TemplateToken token, object model ) {
+            var value = token.Value;
 
             if ( value.Length >= 2 && value[1].Equals( '!' ) ) {
                 var newValue = @"#{" + value.Substring( 3 );
 
-                ReplaceMatch( match, newValue );
+                ReplaceMatch(newContent, token, newValue );
             } else {
-                KeyValuePair<string,string> item = GetKeyValue( match );
-
                 // Find the processor key
                 ITemplateValueProcessor selectedProcessor 
-                    = GetValueProcessor( item.Key );
+                    = GetValueProcessor( token.Key );
 
                 if ( selectedProcessor == null )
-                    ReplaceMatch( match, "<b style='color: red'>TEMPLATE ERROR: Key invalid</b>" );
+                    ReplaceMatch(newContent, token, "<b style='color: red'>TEMPLATE ERROR: Key invalid</b>" );
                 else {
-                    ReplaceMatch( match, selectedProcessor.ProcessValue( item.Value, DataSource ) );
+                    ReplaceMatch( newContent, token, selectedProcessor.ProcessValue( token.Value, model ) );
                 }
             }
         }
 
-        private void ReplaceMatch( Match match, string newValue ) {
-            Template.Remove( match.Index, match.Length );
-            Template.Insert( match.Index, newValue );
+        private void ReplaceMatch( StringBuilder newContent, TemplateToken token, string newValue ) {
+            newContent.Remove( token.StartIndexInTemplate, token.Length );
+            newContent.Insert( token.StartIndexInTemplate, newValue );
         }
 
         private KeyValuePair<string, string> GetKeyValue( Match match ) {
@@ -105,5 +92,4 @@ namespace Catechize.Templating.Web
         }
 
     }
-
 }
