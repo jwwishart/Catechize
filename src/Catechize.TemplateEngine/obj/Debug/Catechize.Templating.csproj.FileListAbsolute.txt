@@ -1,0 +1,5 @@
+C:\_Development\Catechize\src\Catechize.TemplateEngine\bin\Debug\Catechize.Templating.dll
+C:\_Development\Catechize\src\Catechize.TemplateEngine\bin\Debug\Catechize.Templating.pdb
+C:\_Development\Catechize\src\Catechize.TemplateEngine\obj\Debug\ResolveAssemblyReference.cache
+C:\_Development\Catechize\src\Catechize.TemplateEngine\obj\Debug\Catechize.Templating.dll
+C:\_Development\Catechize\src\Catechize.TemplateEngine\obj\Debug\Catechize.Templating.pdb

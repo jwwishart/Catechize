@@ -8,10 +8,16 @@ using Catechize.Services;
 
 namespace Catechize.Controllers
 {
+    using Catechize.Helpers;
+
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+            //// return this.Redirect<HomeController>( c => c.About() );
+            //return this.Redirect<AccountController>(c => c.ChangePassword());
+            ////return this.Redirect<AccountController>(c => c.Register());
+
             ViewBag.Message = "Welcome";
 
             return View();

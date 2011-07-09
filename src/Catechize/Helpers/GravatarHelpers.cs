@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Security.Cryptography;
-using System.Web.Mvc;
 using System.Text;
+using System.Web.Mvc;
 
 namespace Catechize.Helpers
 {
@@ -27,10 +25,21 @@ namespace Catechize.Helpers
             return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, string title) {
+            var url = GetGravatarUrl(helper, CleanupEmail(email), 40, GetDefaultGravatarString(GravatarDefault.MysteryMan));
+            return MvcHtmlString.Create(ConstructImgTag(url, title));
+        }
+
         public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size)
         {
             var url = GetGravatarUrl(helper, CleanupEmail(email), size, GetDefaultGravatarString(GravatarDefault.MysteryMan));
             return MvcHtmlString.Create(ConstructImgTag(url));
+        }
+
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, string title, int size)
+        {
+            var url = GetGravatarUrl(helper, CleanupEmail(email), size, GetDefaultGravatarString(GravatarDefault.MysteryMan));
+            return MvcHtmlString.Create(ConstructImgTag(url, title));
         }
 
         public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size, string defaultImageUrl)
@@ -39,12 +48,26 @@ namespace Catechize.Helpers
             return MvcHtmlString.Create(ConstructImgTag(url));
         }
 
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, string title, int size, string defaultImageUrl)
+        {
+            var url = GetGravatarUrl(helper, CleanupEmail(email), size, UrlEncode(helper, defaultImageUrl));
+            return MvcHtmlString.Create(ConstructImgTag(url, title));
+        }
+
         public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, int size, GravatarDefault defaultImage)
         {
             var mode = GetDefaultGravatarString(defaultImage);
 
             var url = GetGravatarUrl(helper, CleanupEmail(email), size, mode);
             return MvcHtmlString.Create(ConstructImgTag(url));
+        }
+
+        public static MvcHtmlString Gravatar(this HtmlHelper helper, string email, string title, int size, GravatarDefault defaultImage)
+        {
+            var mode = GetDefaultGravatarString(defaultImage);
+
+            var url = GetGravatarUrl(helper, CleanupEmail(email), size, mode);
+            return MvcHtmlString.Create(ConstructImgTag(url, title));
         }
 
         public static string GetDefaultGravatarString(GravatarDefault defaultGravatar) {
@@ -77,10 +100,10 @@ namespace Catechize.Helpers
         }
 
 
-        private static string ConstructImgTag(string src)
+        private static string ConstructImgTag(string src, string title = "Gravatar")
         {
-            var result = "<img src=\"{0}\" alt=\"Gravatar\" class=\"gravatar\" />";
-            return String.Format(result, src);
+            var result = "<img src=\"{0}\" alt=\"Gravatar\" class=\"gravatar\" title=\"{1}\" />";
+            return String.Format(result, src, title);
         }
 
         static string GetGravatarUrl(HtmlHelper helper, string email, int size, string defaultImage)

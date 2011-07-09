@@ -161,14 +161,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\MailController.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Customization\AjaxOnlyAttribute.cs" />
     <Compile Include="Customization\CatechizeWebViewPage.cs" />
-    <Compile Include="Customization\CourseInitializer.cs" />
     <Compile Include="Customization\FormsAuthenticationServices.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,6 +178,7 @@
     <Compile Include="Helpers\LinkToGenerationHelperExtensions.cs" />
     <Compile Include="Helpers\LinkToGenerationHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\LinkResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -187,6 +186,7 @@
       <DependentUpon>LinkResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Settings.cs" />
+    <Compile Include="Services\Storage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Catechize.css" />
@@ -201,6 +201,8 @@
     <Content Include="Facebook\Docs\reference.htm" />
     <Content Include="Facebook\Docs\startHere.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Templates\TestTemplate.html" />
+    <Content Include="Templates\_subTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -258,6 +260,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
+    <Folder Include="Documentation\Licenses\" />
+    <Folder Include="Views\DisplayTemplates\" />
+    <Folder Include="Views\EditorTemplates\" />
     <Folder Include="Views\Mail\" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +283,10 @@
     <ProjectReference Include="..\Catechize.Services\Catechize.Services.csproj">
       <Project>{2FD2E695-5298-477A-A155-756EE357EFE0}</Project>
       <Name>Catechize.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catechize.TemplateEngine\Catechize.Templating.csproj">
+      <Project>{259CE9AC-F43B-4AB3-B0E5-26D2473F87A4}</Project>
+      <Name>Catechize.Templating</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +320,10 @@
     <Content Include="Facebook\Login.cshtml" />
     <Content Include="App_Code\Facebook.cshtml" />
     <Content Include="App_Code\TwitterGoodies.cshtml" />
+    <Content Include="Views\User\Account_Public.cshtml" />
+    <Content Include="Views\User\Account_Private.cshtml" />
+    <Content Include="Views\User\Account_Personal.cshtml" />
+    <Content Include="Views\Test\TemplateTest.cshtml" />
     <None Include="Web.config.sample">
       <SubType>Designer</SubType>
     </None>
@@ -334,8 +347,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49534</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/Catechize</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

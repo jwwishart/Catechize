@@ -14,9 +14,12 @@ using Catechize.Customization;
 using Microsoft.Web.Helpers;
 using System.Configuration;
 using Catechize.Helpers;
+using System.Web.Profile;
+using System.Threading;
 
 namespace Catechize.Controllers
 {
+    // TODO: Password Recovery Disabled for master account
     public class AccountController : Controller
     {
         public IFormsAuthenticationService FormsService { get; set; }
@@ -31,7 +34,6 @@ namespace Catechize.Controllers
             this.FormsService = formsService;
         }
 
-        // TODO: remove for production
         public ActionResult SetupDatabaseDefaults()
         {
             // Only allow this is Dev or S
@@ -89,6 +91,9 @@ namespace Catechize.Controllers
                 {
                     FormsService.SignIn(model.Username, model.RememberMe);
 
+                    // Create Language_Code cookie | Set preferred user culture
+                    SetPreferredLanguageCookie(model.Username);
+
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -106,6 +111,15 @@ namespace Catechize.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void SetPreferredLanguageCookie(string username)
+        {
+            Response.Cookies.Add(
+                new HttpCookie("Preferred_Language",
+                    DefaultProfile.Create(username, true)
+                                  .GetPropertyValue("Preferred_Language")
+                                  .ToString()));
         }
 
         // **************************************
@@ -147,6 +161,13 @@ namespace Catechize.Controllers
                     if (status == MembershipCreateStatus.Success)
                     {
                         FormsService.SignIn(model.Username, true);
+
+                        // TODO: Want to provide this setting via drop down on page
+                        DefaultProfile.Create(model.Username).SetPropertyValue("Preferred_Language",
+                            Thread.CurrentThread.CurrentUICulture.Name);
+                        
+                        SetPreferredLanguageCookie(model.Username);
+
                         return RedirectToAction("Index", "Home");
                     }
                     else

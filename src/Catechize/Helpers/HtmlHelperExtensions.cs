@@ -42,7 +42,5 @@ namespace Catechize.Helpers
             return MvcHtmlString.Create(builder.ToString());
         }
 
-
-
     }
 }

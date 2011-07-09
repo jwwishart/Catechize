@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Catechize.Models;
+using System.Web.Security;
 
 namespace Catechize.Controllers
 {
@@ -11,9 +13,31 @@ namespace Catechize.Controllers
         //
         // GET: /User/
 
-        public ActionResult Index()
+        public ActionResult Index(string username)
         {
-            return View();
+            PrivateUserProfileModel model;
+
+            if (User.Identity != null)
+            {
+                if (username.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    model = new PersonalUserProfileModel();
+                    model.Username = username;
+                    model.Email = Membership.GetUser(username).Email;
+                    return View("Account_Personal", model);
+                }
+                else
+                {
+                    // View only
+                    model = new PrivateUserProfileModel();
+                    model.Username = username;
+                    model.Email = Membership.GetUser(username).Email;
+                    return View("Account_Public", model);
+                }
+            }
+
+            // Anonymous Users
+            return View("Account_Private");
         }
 
         public ActionResult Profile()

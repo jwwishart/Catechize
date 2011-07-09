@@ -69,7 +69,6 @@ namespace Catechize.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Username")]
-        [MaxLength(50)]
         [StringLength(50, MinimumLength=4)]
         public string Username { get; set; }
 
@@ -79,7 +78,6 @@ namespace Catechize.Models
         public string Email { get; set; }
 
         [Required]
-        //[ValidatePasswordLength]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

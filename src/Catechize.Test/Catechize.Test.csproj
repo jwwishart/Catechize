@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\AccountController_Test.cs" />
     <Compile Include="Model\Course_Tests.cs" />
     <Compile Include="Services\IMembershipService_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\Catechize.Services\Catechize.Services.csproj">
       <Project>{2FD2E695-5298-477A-A155-756EE357EFE0}</Project>
       <Name>Catechize.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catechize\Catechize.csproj">
+      <Project>{41B4A4B4-37C1-42E4-8453-FE842D9BBBC4}</Project>
+      <Name>Catechize</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,6 @@ namespace Catechize {
     public static class AppStart_NinjectMVC3 {
         public static void RegisterServices(IKernel kernel) {
             kernel.Bind<ICourseService>().To<CourseService>();
-            kernel.Bind<IStudentService>().To<StudentService>();
 
             kernel.Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
         }

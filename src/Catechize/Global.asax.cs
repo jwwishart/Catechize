@@ -30,48 +30,73 @@ namespace Catechize
             routes.MapRoute(
                 "Study",
                 "Study/{courseKey}/Part{coursePart}/{coursePage}",
-                new { controller="Study", action="HandlePageRequest", 
-                      courseKey = "Basic", coursePart = 1, coursePage = "index" }
+                new
+                {
+                    controller = "Study",
+                    action = "HandlePageRequest",
+                    courseKey = "Basic",
+                    coursePart = 1,
+                    coursePage = "index"
+                }
             );
 
             routes.MapRoute(
                 "User",
                 "User/{username}/{action}",
-                new { controller="User", action="index" }
+                new { controller = "User", action = "index" }
             );
 
             routes.MapRoute(
                 "Courses",
                 "Courses/{action}/{courseName}",
-                new { controller="Courses", action="Index" }
+                new { controller = "Courses", action = "Index" }
             );
 
             routes.MapRoute(
                 "Admin",
                 "Admin/{adminArea}",
-                new { controller = "Admin", action = "Index",
-                    adminArea = UrlParameter.Optional }
+                new
+                {
+                    controller = "Admin",
+                    action = "Index",
+                    adminArea = UrlParameter.Optional
+                }
             );
 
             routes.MapRoute(
                 "Design",
                 "Design/{courseKey}/{page}",
-                new { controller="Design", action="Index",
-                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
+                new
+                {
+                    controller = "Design",
+                    action = "Index",
+                    courseKey = UrlParameter.Optional,
+                    page = UrlParameter.Optional
+                }
             );
 
             routes.MapRoute(
                 "Translate",
                 "Translate/{courseKey}/{page}",
-                new { controller="Translate", action="Index",
-                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
+                new
+                {
+                    controller = "Translate",
+                    action = "Index",
+                    courseKey = UrlParameter.Optional,
+                    page = UrlParameter.Optional
+                }
             );
 
             routes.MapRoute(
                 "Grading",
                 "Grading/{courseKey}/{page}",
-                new { controller="Grading", action="Index",
-                      courseKey = UrlParameter.Optional, page = UrlParameter.Optional }
+                new
+                {
+                    controller = "Grading",
+                    action = "Index",
+                    courseKey = UrlParameter.Optional,
+                    page = UrlParameter.Optional
+                }
             );
 
             routes.MapRoute(
@@ -79,6 +104,18 @@ namespace Catechize
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            // Set thread culture to cookie
+            var languageCookie = Request.Cookies["Preferred_Language"];
+
+            if (languageCookie != null)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture
+                    = new System.Globalization.CultureInfo(languageCookie.Value);
+            }
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
@@ -102,7 +139,7 @@ namespace Catechize
 
             if (Context.User != null)
             {
-                var principal = new GenericPrincipal( 
+                var principal = new GenericPrincipal(
                     new GenericIdentity(authTicket.Name, "CatechizeCustom"),
                     authTicket.UserData.Split(',') /* User Roles */);
 

@@ -1,0 +1,27 @@
+﻿@model Catechize.Models.PersonalUserProfileModel
+@{
+    ViewBag.Title = "Account Details";
+}
+<table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td style="width: 50px; height: 50px;">@Html.Gravatar(Model.Email)
+        </td>
+        <td style="vertical-align: middles;">
+            <h1>@Model.Username</h1>
+        </td>
+    </tr>
+    <tr>
+        <td>Username</td>
+        <td>@Html.DisplayFor(model => model.Username)</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>@Html.DisplayFor(model => model.Email)</td>
+    </tr>
+</table>
+
+<p>
+    @LinkTo.ChangePassword()<br />
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

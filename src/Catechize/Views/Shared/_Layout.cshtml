@@ -10,7 +10,6 @@
 
 <body>
     <div class="page">
-
         <div id="header">
             <div id="title">
                 <h1>My MVC Application</h1>
@@ -24,6 +23,11 @@
                 <ul id="menu">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@LinkTo.ListCourses()</li>
+                    @if (User.Identity != null && String.IsNullOrEmpty(User.Identity.Name) == false)
+                    {
+                        <li>@(LinkTo.Action<Catechize.Controllers.UserController>(c => c.Index(User.Identity.Name)))</li>
+                        <li>@LinkTo.ViewMyAccount()</li>
+                    }
                 </ul>
 
             </div>
